@@ -81,6 +81,11 @@ func TestClient_GetTransactionsByTime(t *testing.T) {
 	fmt.Println(res)
 }
 
+func TestClient_GetPendingTransactions(t *testing.T) {
+	res := client.GetPendingTransactions(map[string]string{})
+	fmt.Println(res)
+}
+
 func TestClient_GetTransactionHistory(t *testing.T) {
 	res := client.GetTransactionHistory(map[string]string{})
 	fmt.Println(res)
