@@ -12,7 +12,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
      * [Check Account Details](#check-account-details)
      * [Get Coin Details](#get-coin-details)
      * [Get New Deposit Address](#get-new-deposit-address)
-     * [Batch Aet New Deposit Address](#batch-aet-new-deposit-address)
+     * [Batch New Deposit Address](#batch-new-deposit-address)
      * [Verify Deposit Address](#verify-deposit-address)
      * [Batch Verify Deposit Address](#batch-verify-deposit-address)
      * [Verify Valid Address](#verify-valid-address)
@@ -115,7 +115,7 @@ client.NewDepositAddress("BTC", false)
 ```
 </details>
 
-#### Batch Aet New Deposit Address
+#### Batch New Deposit Address
 ```go
 client.BatchNewDepositAddress("ETH", 3, false)
 ```
