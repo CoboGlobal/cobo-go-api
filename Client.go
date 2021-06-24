@@ -243,7 +243,6 @@ func (c Client) Request(method string, path string, params map[string]string) st
 	signature := resp.Header["Biz-Resp-Signature"][0]
 	success := c.VerifyEcc(string(body)+"|"+timestamp, signature)
 	fmt.Println("verify success?", success)
-	fmt.Println(string(body))
 	return string(body)
 }
 
