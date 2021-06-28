@@ -1,4 +1,4 @@
-package main
+package cobo
 
 import (
 	"encoding/hex"
@@ -15,10 +15,10 @@ import (
 )
 
 type Client struct {
-	apiKey  string
-	signer  ApiSigner
-	coboPub string
-	host    string
+	ApiKey  string
+	Signer  ApiSigner
+	CoboPub string
+	Host    string
 }
 
 func (c Client) GetAccountInfo() string {
@@ -222,16 +222,16 @@ func (c Client) Request(method string, path string, params map[string]string) st
 	sorted := SortParams(params)
 	var req *http.Request
 	if method == "POST" {
-		req, _ = http.NewRequest(method, c.host+path, strings.NewReader(sorted))
+		req, _ = http.NewRequest(method, c.Host+path, strings.NewReader(sorted))
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	} else {
-		req, _ = http.NewRequest(method, c.host+path+"?"+sorted, strings.NewReader(""))
+		req, _ = http.NewRequest(method, c.Host+path+"?"+sorted, strings.NewReader(""))
 	}
 	content := strings.Join([]string{method, path, nonce, sorted}, "|")
 
-	req.Header.Set("Biz-Api-Key", c.apiKey)
+	req.Header.Set("Biz-Api-Key", c.ApiKey)
 	req.Header.Set("Biz-Api-Nonce", nonce)
-	req.Header.Set("Biz-Api-Signature", c.signer.Sign(content))
+	req.Header.Set("Biz-Api-Signature", c.Signer.Sign(content))
 
 	resp, _ := httpClient.Do(req)
 
@@ -264,7 +264,7 @@ func SortParams(params map[string]string) string {
 }
 
 func (c Client) VerifyEcc(message string, signature string) bool {
-	pubKeyBytes, _ := hex.DecodeString(c.coboPub)
+	pubKeyBytes, _ := hex.DecodeString(c.CoboPub)
 	pubKey, _ := btcec.ParsePubKey(pubKeyBytes, btcec.S256())
 
 	sigBytes, _ := hex.DecodeString(signature)

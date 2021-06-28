@@ -1,4 +1,4 @@
-package main
+package cobo
 
 import (
 	"crypto/rand"
@@ -9,7 +9,7 @@ import (
 )
 
 type LocalSigner struct {
-	privateKey string
+	PrivateKey string
 }
 
 func Hash256(s string) string {
@@ -23,7 +23,7 @@ func Hash256x2(s string) string {
 }
 
 func (signer LocalSigner) Sign(message string) string {
-	apiSecret, _ := hex.DecodeString(signer.privateKey)
+	apiSecret, _ := hex.DecodeString(signer.PrivateKey)
 	key, _ := btcec.PrivKeyFromBytes(btcec.S256(), apiSecret)
 	sig, _ := key.Sign([]byte(Hash256x2(message)))
 	return fmt.Sprintf("%x", sig.Serialize())

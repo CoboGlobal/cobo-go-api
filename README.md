@@ -45,10 +45,9 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
   * [Withdrawal Confirmation](#withdrawal-confirmation)
 
 ## Installation
-
-add dependency to `go.mod`
+ 
 ```
-require https://github.com/CoboCustody/cobo-go-api v0.1
+go get github.com/CoboCustody/cobo-go-api
 ```
 
 
@@ -65,7 +64,9 @@ go test cobo-go-api
 #### Generate Key Pair
 
 ```go
-apiSecret, apiKey := GenerateKeyPair()
+import "github.com/CoboCustody/cobo-go-api/cobo"
+
+apiSecret, apiKey := cobo.GenerateKeyPair()
 println("API_SECRET:", apiSecret)
 println("API_KEY:", apiKey)
 ```
@@ -74,7 +75,8 @@ Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authent
 #### Initialize RestClient
 
 ```go
-client = Client("API_KEY",API_SIGNER,"COBO_PUB", host)
+import "github.com/CoboCustody/cobo-go-api/cobo"
+client = cobo.Client("API_KEY",API_SIGNER,"COBO_PUB", host)
 ```
 
 #### Initialize ApiSigner

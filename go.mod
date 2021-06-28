@@ -1,4 +1,4 @@
-module cobo-go-api
+module github.com/CoboCustody/cobo-go-api
 
 go 1.16
 

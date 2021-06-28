@@ -1,4 +1,4 @@
-package main
+package cobo
 
 import (
 	"fmt"
@@ -8,13 +8,13 @@ import (
 )
 
 var localSigner = LocalSigner{
-	"e7e73fabdd9edb8bddf947954c400a63bf93edc57abf170544ec570757df5453",
+	PrivateKey: "e7e73fabdd9edb8bddf947954c400a63bf93edc57abf170544ec570757df5453",
 }
 var client = Client{
-	"0397ef0d81938bcf9587466ee33ab93caa77677416ada3297e70e92aa42245d99e",
-	localSigner,
-	"032f45930f652d72e0c90f71869dfe9af7d713b1f67dc2f7cb51f9572778b9c876",
-	"https://api.sandbox.cobo.com",
+	ApiKey:  "0397ef0d81938bcf9587466ee33ab93caa77677416ada3297e70e92aa42245d99e",
+	Signer:  localSigner,
+	CoboPub: "032f45930f652d72e0c90f71869dfe9af7d713b1f67dc2f7cb51f9572778b9c876",
+	Host:    "https://api.sandbox.cobo.com",
 }
 
 func TestClient_GetAccountInfo(t *testing.T) {
