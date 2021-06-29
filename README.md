@@ -45,16 +45,18 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
   * [Withdrawal Confirmation](#withdrawal-confirmation)
 
 ## Installation
- 
+
+add dependency 
 ```
-go get github.com/CoboCustody/cobo-go-api
+go get github.com/CoboCustody/cobo-go-api@v0.20.0
 ```
 
 
 ## Test
 
 ```
-go test cobo-go-api
+cd cobo
+go test
 ```
 
 ## Usage

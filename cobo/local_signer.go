@@ -29,6 +29,12 @@ func (signer LocalSigner) Sign(message string) string {
 	return fmt.Sprintf("%x", sig.Serialize())
 }
 
+func (signer LocalSigner) GetPublicKey() string {
+	apiSecret, _ := hex.DecodeString(signer.PrivateKey)
+	key, _ := btcec.PrivKeyFromBytes(btcec.S256(), apiSecret)
+	return fmt.Sprintf("%x", key.PubKey().SerializeCompressed())
+}
+
 func GenerateKeyPair() (string, string) {
 	apiSecret := make([]byte, 32)
 	if _, err := rand.Read(apiSecret); err != nil {
