@@ -68,7 +68,7 @@ go test
 ```go
 import "github.com/CoboCustody/cobo-go-api/cobo_custody"
 
-apiSecret, apiKey := cobo.GenerateKeyPair()
+apiSecret, apiKey := cobo_custody.GenerateKeyPair()
 println("API_SECRET:", apiSecret)
 println("API_KEY:", apiKey)
 ```
