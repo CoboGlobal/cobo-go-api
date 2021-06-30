@@ -1,4 +1,4 @@
-package cobo
+package cobo_custody
 
 import (
 	"crypto/rand"

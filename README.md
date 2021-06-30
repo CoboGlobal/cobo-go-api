@@ -48,7 +48,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboCustody/cobo-go-api@v0.20.0
+go get github.com/CoboCustody/cobo-go-api@v0.25.0
 ```
 
 
@@ -66,7 +66,7 @@ go test
 #### Generate Key Pair
 
 ```go
-import "github.com/CoboCustody/cobo-go-api/cobo"
+import "github.com/CoboCustody/cobo-go-api/cobo_custody"
 
 apiSecret, apiKey := cobo.GenerateKeyPair()
 println("API_SECRET:", apiSecret)
@@ -77,14 +77,25 @@ Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authent
 #### Initialize RestClient
 
 ```go
-import "github.com/CoboCustody/cobo-go-api/cobo"
-client = cobo.Client("API_KEY",API_SIGNER,"COBO_PUB", host)
+import "github.com/CoboCustody/cobo-go-api/cobo_custody"
+var client = cobo_custody.Client{
+  Signer:  localSigner,
+  Env: cobo.Sandbox(),
+}
 ```
 
 #### Initialize ApiSigner
 
 
-`ApiSigner` can be instantiated through `LocalSigner("API_SECRET")`
+`ApiSigner` can be instantiated through
+
+```go
+import "github.com/CoboCustody/cobo-go-api/cobo_custody"
+
+var localSigner = cobo_custody.LocalSigner{
+		PrivateKey: "apiSecret",
+	}
+```
 
 In some cases, your private key cannot be exported, for example, your private key is in aws kms, you should pass in your own implementation by implements `ApiSigner` interface
 

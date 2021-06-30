@@ -1,4 +1,4 @@
-package cobo
+package cobo_custody
 
 type Env struct {
 	Host string
