@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/big"
 	"testing"
-	"time"
 )
 
 var localSigner = LocalSigner{
@@ -167,7 +166,7 @@ func TestClient_GetPendingTransaction(t *testing.T) {
 }
 func TestClient_Withdraw(t *testing.T) {
 	result, apiError := client.Withdraw("TETH",
-		"request_id_"+fmt.Sprintf("%d", time.Now().Unix()*1000),
+		"",
 		"0xb744adc8d75e115eec8e582eb5e8d60eb0972037",
 		big.NewInt(1),
 		map[string]string{})

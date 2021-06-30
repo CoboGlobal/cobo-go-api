@@ -1,6 +1,7 @@
 package cobo_custody
 
 import (
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"github.com/bitly/go-simplejson"
@@ -134,6 +135,10 @@ func (c Client) GetTransactionHistory(params map[string]string) (*simplejson.Jso
 }
 
 func (c Client) Withdraw(coin string, requestId string, address string, amount *big.Int, options map[string]string) (*simplejson.Json, *ApiError) {
+	if requestId == ""{
+		hashResult := sha256.Sum256([]byte(address))
+		requestId = fmt.Sprintf("sdk_request_id_%s_%d", fmt.Sprintf("%x", hashResult)[0:8],time.Now().Unix()*1000)
+	}
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,

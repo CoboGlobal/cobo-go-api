@@ -48,7 +48,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboCustody/cobo-go-api@v0.25.0
+go get github.com/CoboCustody/cobo-go-api@v0.26.0
 ```
 
 
@@ -324,7 +324,7 @@ client.GetTransactionHistory(map[string]string{})
 #### Submit Withdraw Request
 ```go
 client.Withdraw("TETH",
-"request_id_"+fmt.Sprintf("%d", time.Now().Unix()*1000),
+"",
 "0xb744adc8d75e115eec8e582eb5e8d60eb0972037",
 big.NewInt(1),
 map[string]string{})
