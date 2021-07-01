@@ -1,7 +1,7 @@
 package cobo_custody
 
 type Env struct {
-	Host string
+	Host    string
 	CoboPub string
 }
 

@@ -7,12 +7,12 @@ import (
 )
 
 var localSigner = LocalSigner{
-	PrivateKey: "e7e73fabdd9edb8bddf947954c400a63bf93edc57abf170544ec570757df5453",
+	PrivateKey: "apiSecret",
 }
 var client = Client{
-	Signer:  localSigner,
-	Env: Sandbox(),
-	Debug: false,
+	Signer: localSigner,
+	Env:    Sandbox(),
+	Debug:  false,
 }
 
 func TestClient_GetAccountInfo(t *testing.T) {
@@ -20,7 +20,7 @@ func TestClient_GetAccountInfo(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -39,7 +39,7 @@ func TestClient_NewDepositAddress(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -48,7 +48,7 @@ func TestClient_BatchNewDepositAddress(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -57,7 +57,7 @@ func TestClient_VerifyDepositAddress(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 func TestClient_BatchVerifyDepositAddress(t *testing.T) {
@@ -65,7 +65,7 @@ func TestClient_BatchVerifyDepositAddress(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -74,7 +74,7 @@ func TestClient_VerifyValidAddress(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -83,7 +83,7 @@ func TestClient_GetAddressHistory(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -92,7 +92,7 @@ func TestClient_CheckLoopAddressDetails(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -101,7 +101,7 @@ func TestClient_VerifyLoopAddressList(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -110,7 +110,7 @@ func TestClient_GetTransactionDetails(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -119,7 +119,7 @@ func TestClient_GetTransactionsById(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -130,7 +130,7 @@ func TestClient_GetTransactionsByTime(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -141,7 +141,7 @@ func TestClient_GetPendingTransactions(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -152,7 +152,7 @@ func TestClient_GetTransactionHistory(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -161,7 +161,7 @@ func TestClient_GetPendingTransaction(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 func TestClient_Withdraw(t *testing.T) {
@@ -173,7 +173,7 @@ func TestClient_Withdraw(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -182,7 +182,7 @@ func TestClient_QueryWithdrawInfo(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -191,7 +191,7 @@ func TestClient_GetStakingProductDetails(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -200,7 +200,7 @@ func TestClient_GetStakingProductList(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -211,7 +211,7 @@ func TestClient_Stake(t *testing.T) {
 		fmt.Println(apiError.ErrorCode)
 		fmt.Println(apiError.ErrorMessage)
 	} else {
-		str,_ := result.Encode()
+		str, _ := result.Encode()
 		fmt.Println(string(str))
 	}
 }
@@ -222,7 +222,7 @@ func TestClient_Unstake(t *testing.T) {
 		fmt.Println(apiError.ErrorCode)
 		fmt.Println(apiError.ErrorMessage)
 	} else {
-		str,_ := result.Encode()
+		str, _ := result.Encode()
 		fmt.Println(string(str))
 	}
 }
@@ -232,7 +232,7 @@ func TestClient_GetStakings(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -241,7 +241,7 @@ func TestClient_GetUnstakings(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
@@ -250,11 +250,11 @@ func TestClient_GetStakingHistory(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
-	str,_ := result.Encode()
+	str, _ := result.Encode()
 	fmt.Println(string(str))
 }
 
-func Test_GenerateKeyPair(*testing.T)  {
+func Test_GenerateKeyPair(*testing.T) {
 	apiSecret, apiKey := GenerateKeyPair()
 	println("API_SECRET:", apiSecret)
 	println("API_KEY:", apiKey)

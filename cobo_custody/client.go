@@ -23,11 +23,11 @@ type Client struct {
 }
 
 func (c Client) GetAccountInfo() (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/org_info/", map[string]string{})
+	return c.Request("GET", "/v1/custody/org_info/", map[string]string{})
 }
 
 func (c Client) GetCoinInfo(coin string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/coin_info/", map[string]string{
+	return c.Request("GET", "/v1/custody/coin_info/", map[string]string{
 		"coin": coin,
 	})
 }
@@ -39,7 +39,7 @@ func (c Client) NewDepositAddress(coin string, nativeSegwit bool) (*simplejson.J
 	if nativeSegwit {
 		params["native_segwit"] = "true"
 	}
-	return c._Request("POST", "/v1/custody/new_address/", params)
+	return c.Request("POST", "/v1/custody/new_address/", params)
 }
 
 func (c Client) BatchNewDepositAddress(coin string, count int, nativeSegwit bool) (*simplejson.Json, *ApiError) {
@@ -50,7 +50,7 @@ func (c Client) BatchNewDepositAddress(coin string, count int, nativeSegwit bool
 	if nativeSegwit {
 		params["native_segwit"] = "true"
 	}
-	return c._Request("POST", "/v1/custody/new_addresses/", params)
+	return c.Request("POST", "/v1/custody/new_addresses/", params)
 }
 
 func (c Client) VerifyDepositAddress(coin string, address string) (*simplejson.Json, *ApiError) {
@@ -58,7 +58,7 @@ func (c Client) VerifyDepositAddress(coin string, address string) (*simplejson.J
 		"coin":    coin,
 		"address": address,
 	}
-	return c._Request("GET", "/v1/custody/address_info/", params)
+	return c.Request("GET", "/v1/custody/address_info/", params)
 }
 
 func (c Client) BatchVerifyDepositAddress(coin string, addresses string) (*simplejson.Json, *ApiError) {
@@ -66,7 +66,7 @@ func (c Client) BatchVerifyDepositAddress(coin string, addresses string) (*simpl
 		"coin":    coin,
 		"address": addresses,
 	}
-	return c._Request("GET", "/v1/custody/addresses_info/", params)
+	return c.Request("GET", "/v1/custody/addresses_info/", params)
 }
 
 func (c Client) VerifyValidAddress(coin string, addresses string) (*simplejson.Json, *ApiError) {
@@ -74,14 +74,14 @@ func (c Client) VerifyValidAddress(coin string, addresses string) (*simplejson.J
 		"coin":    coin,
 		"address": addresses,
 	}
-	return c._Request("GET", "/v1/custody/is_valid_address/", params)
+	return c.Request("GET", "/v1/custody/is_valid_address/", params)
 }
 
 func (c Client) GetAddressHistory(coin string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin": coin,
 	}
-	return c._Request("GET", "/v1/custody/address_history/", params)
+	return c.Request("GET", "/v1/custody/address_history/", params)
 }
 
 func (c Client) CheckLoopAddressDetails(coin string, address string, memo string) (*simplejson.Json, *ApiError) {
@@ -92,7 +92,7 @@ func (c Client) CheckLoopAddressDetails(coin string, address string, memo string
 	if memo != "" {
 		params["memo"] = memo
 	}
-	return c._Request("GET", "/v1/custody/internal_address_info/", params)
+	return c.Request("GET", "/v1/custody/internal_address_info/", params)
 }
 
 func (c Client) VerifyLoopAddressList(coin string, addresses string) (*simplejson.Json, *ApiError) {
@@ -101,7 +101,7 @@ func (c Client) VerifyLoopAddressList(coin string, addresses string) (*simplejso
 		"address": addresses,
 	}
 
-	return c._Request("GET", "/v1/custody/internal_address_info_batch/", params)
+	return c.Request("GET", "/v1/custody/internal_address_info_batch/", params)
 }
 
 func (c Client) GetTransactionDetails(txId string, ) (*simplejson.Json, *ApiError) {
@@ -109,35 +109,35 @@ func (c Client) GetTransactionDetails(txId string, ) (*simplejson.Json, *ApiErro
 		"id": txId,
 	}
 
-	return c._Request("GET", "/v1/custody/transaction/", params)
+	return c.Request("GET", "/v1/custody/transaction/", params)
 }
 
 func (c Client) GetTransactionsById(params map[string]string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/transactions_by_id/", params)
+	return c.Request("GET", "/v1/custody/transactions_by_id/", params)
 }
 
 func (c Client) GetTransactionsByTime(params map[string]string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/transactions_by_time/", params)
+	return c.Request("GET", "/v1/custody/transactions_by_time/", params)
 }
 
 func (c Client) GetPendingTransactions(params map[string]string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/pending_transactions/", params)
+	return c.Request("GET", "/v1/custody/pending_transactions/", params)
 }
 
 func (c Client) GetPendingTransaction(id string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/pending_transactions/", map[string]string{
+	return c.Request("GET", "/v1/custody/pending_transactions/", map[string]string{
 		"id": id,
 	})
 }
 
 func (c Client) GetTransactionHistory(params map[string]string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/transaction_history/", params)
+	return c.Request("GET", "/v1/custody/transaction_history/", params)
 }
 
 func (c Client) Withdraw(coin string, requestId string, address string, amount *big.Int, options map[string]string) (*simplejson.Json, *ApiError) {
-	if requestId == ""{
+	if requestId == "" {
 		hashResult := sha256.Sum256([]byte(address))
-		requestId = fmt.Sprintf("sdk_request_id_%s_%d", fmt.Sprintf("%x", hashResult)[0:8],time.Now().Unix()*1000)
+		requestId = fmt.Sprintf("sdk_request_id_%s_%d", fmt.Sprintf("%x", hashResult)[0:8], time.Now().Unix()*1000)
 	}
 	var params = map[string]string{
 		"coin":       coin,
@@ -156,11 +156,11 @@ func (c Client) Withdraw(coin string, requestId string, address string, amount *
 	if options["force_internal"] != "" {
 		params["force_internal"] = options["force_internal"]
 	}
-	return c._Request("POST", "/v1/custody/new_withdraw_request/", params)
+	return c.Request("POST", "/v1/custody/new_withdraw_request/", params)
 }
 
 func (c Client) QueryWithdrawInfo(requestId string) (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/withdraw_info_by_request_id/", map[string]string{"request_id": requestId})
+	return c.Request("GET", "/v1/custody/withdraw_info_by_request_id/", map[string]string{"request_id": requestId})
 }
 
 func (c Client) GetStakingProductDetails(productId string, language string) (*simplejson.Json, *ApiError) {
@@ -168,7 +168,7 @@ func (c Client) GetStakingProductDetails(productId string, language string) (*si
 		"product_id": productId,
 		"language":   language,
 	}
-	return c._Request("GET", "/v1/custody/staking_product/", params)
+	return c.Request("GET", "/v1/custody/staking_product/", params)
 }
 
 func (c Client) GetStakingProductList(coin string, language string) (*simplejson.Json, *ApiError) {
@@ -179,7 +179,7 @@ func (c Client) GetStakingProductList(coin string, language string) (*simplejson
 		params["coin"] = coin
 	}
 
-	return c._Request("GET", "/v1/custody/staking_products/", params)
+	return c.Request("GET", "/v1/custody/staking_products/", params)
 }
 
 func (c Client) Stake(productId string, amount *big.Int) (*simplejson.Json, *ApiError) {
@@ -187,7 +187,7 @@ func (c Client) Stake(productId string, amount *big.Int) (*simplejson.Json, *Api
 		"product_id": productId,
 		"amount":     amount.String(),
 	}
-	return c._Request("POST", "/v1/custody/staking_stake/", params)
+	return c.Request("POST", "/v1/custody/staking_stake/", params)
 }
 
 func (c Client) Unstake(productId string, amount *big.Int) (*simplejson.Json, *ApiError) {
@@ -195,7 +195,7 @@ func (c Client) Unstake(productId string, amount *big.Int) (*simplejson.Json, *A
 		"product_id": productId,
 		"amount":     amount.String(),
 	}
-	return c._Request("POST", "/v1/custody/staking_unstake/", params)
+	return c.Request("POST", "/v1/custody/staking_unstake/", params)
 }
 
 func (c Client) GetStakings(coin string, language string) (*simplejson.Json, *ApiError) {
@@ -205,7 +205,7 @@ func (c Client) GetStakings(coin string, language string) (*simplejson.Json, *Ap
 	if coin != "" {
 		params["coin"] = coin
 	}
-	return c._Request("GET", "/v1/custody/stakings/", params)
+	return c.Request("GET", "/v1/custody/stakings/", params)
 }
 
 func (c Client) GetUnstakings(coin string) (*simplejson.Json, *ApiError) {
@@ -213,14 +213,14 @@ func (c Client) GetUnstakings(coin string) (*simplejson.Json, *ApiError) {
 	if coin != "" {
 		params["coin"] = coin
 	}
-	return c._Request("GET", "/v1/custody/unstakings/", params)
+	return c.Request("GET", "/v1/custody/unstakings/", params)
 }
 
 func (c Client) GetStakingHistory() (*simplejson.Json, *ApiError) {
-	return c._Request("GET", "/v1/custody/staking_history/", map[string]string{})
+	return c.Request("GET", "/v1/custody/staking_history/", map[string]string{})
 }
 
-func (c Client) Request(method string, path string, params map[string]string) string {
+func (c Client) request(method string, path string, params map[string]string) string {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().Unix()*1000)
 	sorted := SortParams(params)
@@ -260,9 +260,8 @@ func (c Client) Request(method string, path string, params map[string]string) st
 	return string(body)
 }
 
-func (c Client) _Request(method string, path string, params map[string]string) (*simplejson.Json, *ApiError) {
-
-	jsonString := c.Request(method, path, params)
+func (c Client) Request(method string, path string, params map[string]string) (*simplejson.Json, *ApiError) {
+	jsonString := c.request(method, path, params)
 	json, _ := simplejson.NewJson([]byte(jsonString))
 	success, _ := json.Get("success").Bool()
 	if !success {
