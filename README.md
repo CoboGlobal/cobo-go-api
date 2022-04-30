@@ -48,7 +48,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboCustody/cobo-go-api@v0.26.0
+go get github.com/CoboCustody/cobo-go-api@v0.27.0
 ```
 
 
