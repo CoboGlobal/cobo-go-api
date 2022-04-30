@@ -55,7 +55,7 @@ go get github.com/CoboCustody/cobo-go-api@v0.26.0
 ## Test
 
 ```
-cd cobo
+cd cobo_custody
 go test
 ```
 
