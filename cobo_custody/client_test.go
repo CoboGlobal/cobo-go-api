@@ -135,6 +135,16 @@ func TestClient_GetTransactionsById(t *testing.T) {
 	fmt.Println(string(str))
 }
 
+func TestClient_GetTransactionsByTxId(t *testing.T) {
+	result, apiError := client.GetTransactionsByTxId(map[string]string{})
+	if apiError != nil {
+		t.Fail()
+	}
+	str, _ := result.Encode()
+	fmt.Println("TestClient_GetTransactionsByTxId")
+	fmt.Println(string(str))
+}
+
 func TestClient_GetTransactionsByTime(t *testing.T) {
 	result, apiError := client.GetTransactionsByTime(map[string]string{})
 	if apiError != nil {
