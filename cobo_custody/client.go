@@ -116,7 +116,10 @@ func (c Client) GetTransactionsById(params map[string]string) (*simplejson.Json,
 	return c.Request("GET", "/v1/custody/transactions_by_id/", params)
 }
 
-func (c Client) GetTransactionsByTxId(params map[string]string) (*simplejson.Json, *ApiError) {
+func (c Client) GetTransactionsByTxid(txid string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"txid": txid,
+	}
 	return c.Request("GET", "/v1/custody/transaction_by_txid/", params)
 }
 

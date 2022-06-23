@@ -135,13 +135,13 @@ func TestClient_GetTransactionsById(t *testing.T) {
 	fmt.Println(string(str))
 }
 
-func TestClient_GetTransactionsByTxId(t *testing.T) {
-	result, apiError := client.GetTransactionsByTxId(map[string]string{})
+func TestClient_GetTransactionsByTxid(t *testing.T) {
+	result, apiError := client.GetTransactionsByTxid("0x5d5396c3992ed524bf68a22a7ab6ae503f0349354ad69bc5204d5214085d4e9f")
 	if apiError != nil {
 		t.Fail()
 	}
 	str, _ := result.Encode()
-	fmt.Println("TestClient_GetTransactionsByTxId")
+	fmt.Println("TestClient_GetTransactionsByTxid")
 	fmt.Println(string(str))
 }
 
