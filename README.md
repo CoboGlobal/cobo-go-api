@@ -257,7 +257,7 @@ client.GetTransactionDetails("20210422193807000343569000002370")
 
 #### Get Transactions By Txid
 ```go
-client.GetTransactionsByTxid("20210422193807000343569000002370")
+client.GetTransactionsByTxid("0x5d5396c3992ed524bf68a22a7ab6ae503f0349354ad69bc5204d5214085d4e9f")
 ```
 <details>
 <summary>View Response</summary>
