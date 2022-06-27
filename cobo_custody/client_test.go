@@ -1,18 +1,48 @@
 package cobo_custody
 
 import (
+	"crypto/sha256"
+	"encoding/json"
+	"flag"
 	"fmt"
 	"math/big"
+	"strings"
 	"testing"
+	"time"
 )
 
-var localSigner = LocalSigner{
-	PrivateKey: "apiSecret",
+var env = flag.String("env", "Sandbox", "Env Config")
+var secret = flag.String("secret", "Demo", "Api Secrect")
+
+func GetEnv(env string) Env {
+	if env == "Prod" {
+		return Prod()
+	}
+	return Sandbox()
 }
-var client = Client{
-	Signer: localSigner,
-	Env:    Sandbox(),
-	Debug:  false,
+func GetData(env string) Config {
+	if env == "Prod" {
+		return ProdConfig()
+	}
+	return SandboxConfig()
+}
+
+var ConfigData Config
+var client Client
+
+func TestMain(m *testing.M) {
+	flag.Parse()
+	var localSigner = LocalSigner{
+		PrivateKey: *secret,
+	}
+	ConfigData = GetData(*env)
+	client = Client{
+		Signer: localSigner,
+		Env:    GetEnv(*env),
+		Debug:  false,
+	}
+
+	m.Run()
 }
 
 func TestClient_GetAccountInfo(t *testing.T) {
@@ -25,54 +55,101 @@ func TestClient_GetAccountInfo(t *testing.T) {
 	fmt.Println(string(str))
 }
 
-func TestClient_GetCoinInfo(t *testing.T) {
-	result, apiError := client.GetCoinInfo("ETH")
-	if apiError != nil {
-		t.Fail()
+func TestClient_GetValidCoinInfo(t *testing.T) {
+	coins := [...]string{"ETH", "BTC", "ETH_USDT", "XRP"}
+	for _, coin := range coins {
+		result, apiError := client.GetCoinInfo(coin)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_GetValidCoinInfo, coin:", coin)
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_GetCoinInfo")
-	fmt.Println(string(str))
 }
 
-func TestClient_NewDepositAddress(t *testing.T) {
-	result, apiError := client.NewDepositAddress("BTC", false)
-	if apiError != nil {
-		t.Fail()
+func TestClient_GetInvalidCoinInfo(t *testing.T) {
+	coins := [...]string{"BTTB"}
+	for _, coin := range coins {
+		_, apiError := client.GetCoinInfo(coin)
+		if apiError.ErrorCode != 12002 {
+			t.Fail()
+		}
+		fmt.Println("TestClient_GetInvalidCoinInfo, coin:", coin)
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_NewDepositAddress")
-	fmt.Println(string(str))
 }
 
-func TestClient_BatchNewDepositAddress(t *testing.T) {
-	result, apiError := client.BatchNewDepositAddress("BTC", 3, true)
-	if apiError != nil {
-		t.Fail()
+func TestClient_NewValidDepositAddress(t *testing.T) {
+	coins := [...]string{"ETH", "BTC", "ETH_USDT", "XRP"}
+	for _, coin := range coins {
+		result, apiError := client.NewDepositAddress(coin, false)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_NewValidDepositAddress coin:", coin)
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_BatchNewDepositAddress")
-	fmt.Println(string(str))
+}
+
+func TestClient_NewInvalidDepositAddress(t *testing.T) {
+	coins := [...]string{"BTTB", "ETTE"}
+	for _, coin := range coins {
+		_, apiError := client.NewDepositAddress(coin, false)
+		if apiError.ErrorCode != 12002 {
+			t.Fail()
+		}
+		fmt.Println("TestClient_NewInvalidDepositAddress coin:", coin)
+	}
+}
+
+func TestClient_BatchValidNewDepositAddress(t *testing.T) {
+	coins := [...]string{"ETH", "BTC"}
+	for _, coin := range coins {
+		result, apiError := client.BatchNewDepositAddress(coin, 2, true)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_BatchValidNewDepositAddress coin:", coin)
+		fmt.Println(string(str))
+	}
+}
+
+func TestClient_BatchInvalidNewDepositAddress(t *testing.T) {
+	coins := [...]string{"BTTB", "ETTE"}
+	for _, coin := range coins {
+		_, apiError := client.BatchNewDepositAddress(coin, 2, true)
+		if apiError.ErrorCode != 12002 {
+			t.Fail()
+		}
+		fmt.Println("TestClient_BatchInvalidNewDepositAddress coin:", coin)
+	}
 }
 
 func TestClient_VerifyDepositAddress(t *testing.T) {
-	result, apiError := client.VerifyDepositAddress("BTC", "3JBYNrbB4bHtGWHTEa3ZPuRK9kwTiEUo4D")
-	if apiError != nil {
-		t.Fail()
+	for coin, address := range ConfigData.DeAddress {
+		fmt.Println(coin, address)
+		result, apiError := client.VerifyDepositAddress(coin, address)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_VerifyDepositAddress coin:", coin)
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_VerifyDepositAddress")
-	fmt.Println(string(str))
 }
 
 func TestClient_BatchVerifyDepositAddress(t *testing.T) {
-	result, apiError := client.BatchVerifyDepositAddress("BTC", "3JBYNrbB4bHtGWHTEa3ZPuRK9kwTiEUo4D,bc1qf22hpu33u2tkyy528mdvpnre45n8lu5s3ycatu")
-	if apiError != nil {
-		t.Fail()
+	for coin, addresses := range ConfigData.DeAddresses {
+		result, apiError := client.BatchVerifyDepositAddress(coin, addresses)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_BatchVerifyDepositAddress")
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_BatchVerifyDepositAddress")
-	fmt.Println(string(str))
 }
 
 func TestClient_VerifyValidAddress(t *testing.T) {
@@ -86,37 +163,51 @@ func TestClient_VerifyValidAddress(t *testing.T) {
 }
 
 func TestClient_GetAddressHistory(t *testing.T) {
-	result, apiError := client.GetAddressHistory("ETH")
-	if apiError != nil {
-		t.Fail()
+	coins := [...]string{"ETH", "BTC"}
+	for _, coin := range coins {
+		result, apiError := client.GetAddressHistory(coin)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_GetAddressHistory coin:", coin)
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_GetAddressHistory")
-	fmt.Println(string(str))
 }
 
 func TestClient_CheckLoopAddressDetails(t *testing.T) {
-	result, apiError := client.CheckLoopAddressDetails("BTC", "35eXJPLRTSp4Wn8n2f6pkQF4t3KdU2cuhz", "")
-	if apiError != nil {
-		t.Fail()
+	for coin, address := range ConfigData.LpAddress {
+		var memo = ""
+		if strings.Contains(address, "|") {
+			string_slice := strings.Split(address, "|")
+			address = string_slice[0]
+			memo = string_slice[1]
+
+		}
+		result, apiError := client.CheckLoopAddressDetails(coin, address, memo)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_CheckLoopAddressDetails")
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_CheckLoopAddressDetails")
-	fmt.Println(string(str))
 }
 
 func TestClient_VerifyLoopAddressList(t *testing.T) {
-	result, apiError := client.VerifyLoopAddressList("BTC", "35eXJPLRTSp4Wn8n2f6pkQF4t3KdU2cuhz,34R4JHecUwGNEFVGKz1vR8R6BHGi5FUqPt")
-	if apiError != nil {
-		t.Fail()
+	for coin, addresses := range ConfigData.LpAddresses {
+		result, apiError := client.VerifyLoopAddressList(coin, addresses)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_VerifyLoopAddressList")
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_VerifyLoopAddressList")
-	fmt.Println(string(str))
 }
 
 func TestClient_GetTransactionDetails(t *testing.T) {
-	result, apiError := client.GetTransactionDetails("20220314181458000331767000003732")
+	result, apiError := client.GetTransactionDetails(ConfigData.CoboId)
 	if apiError != nil {
 		t.Fail()
 	}
@@ -136,7 +227,7 @@ func TestClient_GetTransactionsById(t *testing.T) {
 }
 
 func TestClient_GetTransactionsByTxid(t *testing.T) {
-	result, apiError := client.GetTransactionsByTxid("0x5d5396c3992ed524bf68a22a7ab6ae503f0349354ad69bc5204d5214085d4e9f")
+	result, apiError := client.GetTransactionsByTxid(ConfigData.TxId)
 	if apiError != nil {
 		t.Fail()
 	}
@@ -185,21 +276,33 @@ func TestClient_GetPendingTransaction(t *testing.T) {
 }
 
 func TestClient_Withdraw(t *testing.T) {
-	result, apiError := client.Withdraw("COBO_ETH",
-		"",
-		"0xE410157345be56688F43FF0D9e4B2B38Ea8F7828",
-		big.NewInt(1),
-		map[string]string{})
-	if apiError != nil {
-		t.Fail()
+	for coin, address := range ConfigData.Withdraw {
+		hashResult := sha256.Sum256([]byte(address))
+		var requestId = fmt.Sprintf("sdk_request_id_%s_%d", fmt.Sprintf("%x", hashResult)[0:8], time.Now().Unix()*1000)
+		var options = make(map[string]string)
+		if strings.Contains(address, "|") {
+			string_slice := strings.Split(address, "|")
+			address = string_slice[0]
+			options["memo"] = string_slice[1]
+
+		}
+		result, apiError := client.Withdraw(
+			coin,
+			requestId,
+			address,
+			big.NewInt(1),
+			options)
+		if apiError != nil {
+			t.Fail()
+		}
+		str, _ := result.Encode()
+		fmt.Println("TestClient_Withdraw coin:", coin)
+		fmt.Println(string(str))
 	}
-	str, _ := result.Encode()
-	fmt.Println("TestClient_Withdraw")
-	fmt.Println(string(str))
 }
 
 func TestClient_QueryWithdrawInfo(t *testing.T) {
-	result, apiError := client.QueryWithdrawInfo("web_send_by_user_915_1647252768642")
+	result, apiError := client.QueryWithdrawInfo(ConfigData.WithdrawId)
 	if apiError != nil {
 		t.Fail()
 	}
@@ -209,13 +312,21 @@ func TestClient_QueryWithdrawInfo(t *testing.T) {
 }
 
 func TestClient_GetStakingProductDetails(t *testing.T) {
-	result, apiError := client.GetStakingProductDetails("184100", "zh")
+	re, err := client.GetStakingProductList("", "zh")
+	if err != nil {
+		t.Fail()
+	}
+	str, _ := re.Encode()
+	var jsonSlice []map[string]interface{}
+	json.Unmarshal(str, &jsonSlice)
+	var product_id = strings.Split(fmt.Sprintf("%f", jsonSlice[0]["product_id"]), ".")[0]
+	result, apiError := client.GetStakingProductDetails(product_id, "zh")
 	if apiError != nil {
 		t.Fail()
 	}
-	str, _ := result.Encode()
+	strDetail, _ := result.Encode()
 	fmt.Println("TestClient_GetStakingProductDetails")
-	fmt.Println(string(str))
+	fmt.Println(string(strDetail))
 }
 
 func TestClient_GetStakingProductList(t *testing.T) {
@@ -229,7 +340,18 @@ func TestClient_GetStakingProductList(t *testing.T) {
 }
 
 func TestClient_Stake(t *testing.T) {
-	result, apiError := client.Stake("184100", big.NewInt(1000000))
+	re, err := client.GetStakingProductList("TETH", "zh")
+	if err != nil {
+		t.Fail()
+	}
+	str, _ := re.Encode()
+	var jsonSlice []map[string]interface{}
+	json.Unmarshal(str, &jsonSlice)
+	if len(jsonSlice) == 0 {
+		t.Skip("no TETH staking product")
+	}
+	var product_id = strings.Split(fmt.Sprintf("%f", jsonSlice[0]["product_id"]), ".")[0]
+	result, apiError := client.Stake(product_id, big.NewInt(1000000000000000000))
 	if apiError != nil {
 		fmt.Println(apiError.ErrorId)
 		fmt.Println(apiError.ErrorCode)
@@ -242,7 +364,18 @@ func TestClient_Stake(t *testing.T) {
 }
 
 func TestClient_Unstake(t *testing.T) {
-	result, apiError := client.Unstake("184100", big.NewInt(1000000))
+	re, err := client.GetStakingProductList("TETH", "zh")
+	if err != nil {
+		t.Fail()
+	}
+	str, _ := re.Encode()
+	var jsonSlice []map[string]interface{}
+	json.Unmarshal(str, &jsonSlice)
+	if len(jsonSlice) == 0 {
+		t.Skip("no TETH staking product")
+	}
+	var product_id = strings.Split(fmt.Sprintf("%f", jsonSlice[0]["product_id"]), ".")[0]
+	result, apiError := client.Unstake(product_id, big.NewInt(1000000000000000000))
 	if apiError != nil {
 		fmt.Println(apiError.ErrorId)
 		fmt.Println(apiError.ErrorCode)
@@ -265,7 +398,7 @@ func TestClient_GetStakings(t *testing.T) {
 }
 
 func TestClient_GetUnstakings(t *testing.T) {
-	result, apiError := client.GetUnstakings("TETH")
+	result, apiError := client.GetUnstakings("TETH s")
 	if apiError != nil {
 		t.Fail()
 	}
@@ -288,5 +421,4 @@ func Test_GenerateKeyPair(*testing.T) {
 	apiSecret, apiKey := GenerateKeyPair()
 	println("API_SECRET:", apiSecret)
 	println("API_KEY:", apiKey)
-
 }

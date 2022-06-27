@@ -1,0 +1,35 @@
+name: Go Test
+
+on:
+  workflow_dispatch:
+   inputs:
+      environment:
+        description: 'Environment to run tests against'
+        default: sandbox
+        type: choice
+        options:
+          - sandbox
+          - prod
+  push:
+   branches: [ main ]
+  pull_request:
+   branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
+
+    - name: run testcase 
+      env:
+        SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.SANDBOXSECRET}}"
+      run: |
+        cd cobo_custody 
+        go test -env ${{ github.event.inputs.environment }} -secret $SECRET
