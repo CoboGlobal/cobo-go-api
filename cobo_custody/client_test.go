@@ -207,7 +207,7 @@ func TestClient_VerifyLoopAddressList(t *testing.T) {
 }
 
 func TestClient_GetTransactionDetails(t *testing.T) {
-	result, apiError := client.GetTransactionDetails(ConfigData.TxId)
+	result, apiError := client.GetTransactionDetails(ConfigData.CoboId)
 	if apiError != nil {
 		t.Fail()
 	}
@@ -227,7 +227,7 @@ func TestClient_GetTransactionsById(t *testing.T) {
 }
 
 func TestClient_GetTransactionsByTxid(t *testing.T) {
-	result, apiError := client.GetTransactionsByTxid("0x5d5396c3992ed524bf68a22a7ab6ae503f0349354ad69bc5204d5214085d4e9f")
+	result, apiError := client.GetTransactionsByTxid(ConfigData.TxId)
 	if apiError != nil {
 		t.Fail()
 	}

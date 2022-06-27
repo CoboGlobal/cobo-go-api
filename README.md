@@ -57,7 +57,7 @@ go get github.com/CoboCustody/cobo-go-api@v0.27.0
 
 ```
 cd cobo_custody
-go test
+go test -env sandbox/prod -secret <yourApiSecret>
 ```
 
 ## Usage

@@ -31,6 +31,7 @@ func Prod() Env {
 // }
 
 type Config struct {
+	CoboId      string
 	TxId        string
 	WithdrawId  string
 	DeAddress   map[string]string
@@ -42,7 +43,8 @@ type Config struct {
 
 func SandboxConfig() Config {
 	return Config{
-		TxId:       "20220314181458000331767000003732",
+		CoboId:     "20220314181458000331767000003732",
+		TxId:       "0x1c4d137bc2a2ee8f22cbdf9e90405974e72e65d922f42eb81d9f7a05d0f64fc6",
 		WithdrawId: "web_send_by_user_915_1647252768642",
 		DeAddress: map[string]string{
 			"BTC": "3JBYNrbB4bHtGWHTEa3ZPuRK9kwTiEUo4D",
@@ -69,7 +71,8 @@ func SandboxConfig() Config {
 
 func ProdConfig() Config {
 	return Config{
-		TxId:       "20220311154108000184408000002833",
+		CoboId:     "20220311154108000184408000002833",
+		TxId:       "4041A888C9966BE8916FE65F2FEE7AE9A9DC3F49D0F1643A768C842CA95FA736",
 		WithdrawId: "sdk_request_id_fe80cc5f_1647068483396",
 		DeAddress: map[string]string{
 			"BTC": "36xYx7vf7DUKpJDixpY3EoV2jchFwYSNCb",
