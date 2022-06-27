@@ -29,7 +29,8 @@ jobs:
 
     - name: run testcase 
       env:
+        ENV: "${{ github.event.inputs.environment == 'prod' && 'prod' || 'sandbox'}}"
         SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.SANDBOXSECRET}}"
       run: |
         cd cobo_custody 
-        go test -env ${{ github.event.inputs.environment }} -secret $SECRET
+        go test -env $ENV -secret $SECRET
