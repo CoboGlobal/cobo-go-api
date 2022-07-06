@@ -84,6 +84,11 @@ func (c Client) GetAddressHistory(coin string) (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/address_history/", params)
 }
 
+func (c Client) GetAddressHistoryWithPage(params map[string]string) (*simplejson.Json, *ApiError) {
+	
+	return c.Request("GET", "/v1/custody/address_history/", params)
+}
+
 func (c Client) CheckLoopAddressDetails(coin string, address string, memo string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,

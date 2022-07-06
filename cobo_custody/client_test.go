@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"math/big"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -173,6 +174,20 @@ func TestClient_GetAddressHistory(t *testing.T) {
 		fmt.Println("TestClient_GetAddressHistory coin:", coin)
 		fmt.Println(string(str))
 	}
+}
+func TestClient_GetAddressHistoryWithPage(t *testing.T) {
+	var params = map[string]string{
+		"coin":        "ETH",
+		"page_index":  strconv.Itoa(0),
+		"page_length": strconv.Itoa(5),
+	}
+	result, apiError := client.GetAddressHistoryWithPage(params)
+	if apiError != nil {
+		t.Fail()
+	}
+	str, _ := result.Encode()
+	fmt.Println("TestClient_GetAddressHistoryWithPage")
+	fmt.Println(string(str))
 }
 
 func TestClient_CheckLoopAddressDetails(t *testing.T) {
