@@ -175,6 +175,7 @@ func TestClient_GetAddressHistory(t *testing.T) {
 		fmt.Println(string(str))
 	}
 }
+
 func TestClient_GetAddressHistoryWithPage(t *testing.T) {
 	var params = map[string]string{
 		"coin":        "ETH",
@@ -188,6 +189,19 @@ func TestClient_GetAddressHistoryWithPage(t *testing.T) {
 	str, _ := result.Encode()
 	fmt.Println("TestClient_GetAddressHistoryWithPage")
 	fmt.Println(string(str))
+}
+
+func TestClient_GetAddressHistoryWithInvalidPage(t *testing.T) {
+	var params = map[string]string{
+		"coin":        "ETH",
+		"page_index":  strconv.Itoa(0),
+		"page_length": strconv.Itoa(51),
+	}
+	_, apiError := client.GetAddressHistoryWithPage(params)
+	if apiError.ErrorCode != 1011 {
+		t.Fail()
+	}
+	fmt.Println("TestClient_GetAddressHistoryWithInvalidPage")
 }
 
 func TestClient_CheckLoopAddressDetails(t *testing.T) {
