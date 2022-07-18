@@ -181,6 +181,7 @@ func TestClient_GetAddressHistoryWithPage(t *testing.T) {
 		"coin":        "ETH",
 		"page_index":  strconv.Itoa(0),
 		"page_length": strconv.Itoa(5),
+		"sort_flag": strconv.Itoa(0),
 	}
 	result, apiError := client.GetAddressHistoryWithPage(params)
 	if apiError != nil {
@@ -196,6 +197,7 @@ func TestClient_GetAddressHistoryWithInvalidPage(t *testing.T) {
 		"coin":        "ETH",
 		"page_index":  strconv.Itoa(0),
 		"page_length": strconv.Itoa(51),
+		"sort_flag": strconv.Itoa(0),
 	}
 	_, apiError := client.GetAddressHistoryWithPage(params)
 	if apiError.ErrorCode != 1011 {
