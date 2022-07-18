@@ -83,7 +83,10 @@ func (c Client) GetAddressHistory(coin string) (*simplejson.Json, *ApiError) {
 	}
 	return c.Request("GET", "/v1/custody/address_history/", params)
 }
-
+// @param coin  string "ETH"
+// @param page_index int start with 0 page
+// @param page_length int page size <= 50
+// @param sort_flag int 0:DESCENDING 1:ASCENDING
 func (c Client) GetAddressHistoryWithPage(params map[string]string) (*simplejson.Json, *ApiError) {
 	
 	return c.Request("GET", "/v1/custody/address_history/", params)
