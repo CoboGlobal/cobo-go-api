@@ -412,9 +412,3 @@ func TestClient_GetStakingHistory(t *testing.T) {
 	fmt.Println("TestClient_GetStakingHistory")
 	fmt.Println(string(str))
 }
-
-func Test_GenerateKeyPair(*testing.T) {
-	apiSecret, apiKey := GenerateKeyPair()
-	println("API_SECRET:", apiSecret)
-	println("API_KEY:", apiKey)
-}
