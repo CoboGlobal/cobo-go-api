@@ -3,7 +3,6 @@ package cobo_custody
 import (
 	"crypto/sha256"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"math/big"
 	"strconv"
@@ -11,40 +10,6 @@ import (
 	"testing"
 	"time"
 )
-
-var env = flag.String("env", "Sandbox", "Env Config")
-var secret = flag.String("secret", "Demo", "Api Secrect")
-
-func GetEnv(env string) Env {
-	if env == "Prod" {
-		return Prod()
-	}
-	return Sandbox()
-}
-func GetData(env string) Config {
-	if env == "Prod" {
-		return ProdConfig()
-	}
-	return SandboxConfig()
-}
-
-var ConfigData Config
-var client Client
-
-func TestMain(m *testing.M) {
-	flag.Parse()
-	var localSigner = LocalSigner{
-		PrivateKey: *secret,
-	}
-	ConfigData = GetData(*env)
-	client = Client{
-		Signer: localSigner,
-		Env:    GetEnv(*env),
-		Debug:  false,
-	}
-
-	m.Run()
-}
 
 func TestClient_GetAccountInfo(t *testing.T) {
 	result, apiError := client.GetAccountInfo()
@@ -181,7 +146,7 @@ func TestClient_GetAddressHistoryWithPage(t *testing.T) {
 		"coin":        "ETH",
 		"page_index":  strconv.Itoa(0),
 		"page_length": strconv.Itoa(5),
-		"sort_flag": strconv.Itoa(0),
+		"sort_flag":   strconv.Itoa(0),
 	}
 	result, apiError := client.GetAddressHistoryWithPage(params)
 	if apiError != nil {
@@ -197,7 +162,7 @@ func TestClient_GetAddressHistoryWithInvalidPage(t *testing.T) {
 		"coin":        "ETH",
 		"page_index":  strconv.Itoa(0),
 		"page_length": strconv.Itoa(51),
-		"sort_flag": strconv.Itoa(0),
+		"sort_flag":   strconv.Itoa(0),
 	}
 	_, apiError := client.GetAddressHistoryWithPage(params)
 	if apiError.ErrorCode != 1011 {
@@ -446,10 +411,4 @@ func TestClient_GetStakingHistory(t *testing.T) {
 	str, _ := result.Encode()
 	fmt.Println("TestClient_GetStakingHistory")
 	fmt.Println(string(str))
-}
-
-func Test_GenerateKeyPair(*testing.T) {
-	apiSecret, apiKey := GenerateKeyPair()
-	println("API_SECRET:", apiSecret)
-	println("API_KEY:", apiKey)
 }

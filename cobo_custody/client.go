@@ -4,16 +4,15 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"github.com/bitly/go-simplejson"
-	"github.com/btcsuite/btcd/btcec"
 	"io/ioutil"
 	"math/big"
 	"net/http"
-	"net/url"
-	"sort"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/bitly/go-simplejson"
+	"github.com/btcsuite/btcd/btcec"
 )
 
 type Client struct {
@@ -83,12 +82,13 @@ func (c Client) GetAddressHistory(coin string) (*simplejson.Json, *ApiError) {
 	}
 	return c.Request("GET", "/v1/custody/address_history/", params)
 }
+
 // @param coin  string "ETH"
 // @param page_index int start with 0 page
 // @param page_length int page size <= 50
 // @param sort_flag int 0:DESCENDING 1:ASCENDING
 func (c Client) GetAddressHistoryWithPage(params map[string]string) (*simplejson.Json, *ApiError) {
-	
+
 	return c.Request("GET", "/v1/custody/address_history/", params)
 }
 
@@ -112,7 +112,7 @@ func (c Client) VerifyLoopAddressList(coin string, addresses string) (*simplejso
 	return c.Request("GET", "/v1/custody/internal_address_info_batch/", params)
 }
 
-func (c Client) GetTransactionDetails(txId string, ) (*simplejson.Json, *ApiError) {
+func (c Client) GetTransactionDetails(txId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"id": txId,
 	}
@@ -293,23 +293,6 @@ func (c Client) Request(method string, path string, params map[string]string) (*
 
 	result := json.Get("result")
 	return result, nil
-}
-
-func SortParams(params map[string]string) string {
-	keys := make([]string, len(params))
-	i := 0
-	for k := range params {
-		keys[i] = k
-		i++
-	}
-	sort.Strings(keys)
-	sorted := make([]string, len(params))
-	i = 0
-	for _, k := range keys {
-		sorted[i] = k + "=" + url.QueryEscape(params[k])
-		i++
-	}
-	return strings.Join(sorted, "&")
 }
 
 func (c Client) VerifyEcc(message string, signature string) bool {
