@@ -56,22 +56,21 @@ func TestMPCClient_GetMpcUnspentInputsList(t *testing.T) {
 }
 
 func TestMPCClient_MpcCreateTransaction(t *testing.T) {
-	_, apiError := mpcClient.MpcCreateTransaction("ETH", "test_001", 10,
-		"0xb2ad1bdf4a1d766e8faeb94689547d3fede5792c", "0x9414933Ff7777bb28cA22D15c178596A6e58d957",
+	_, apiError := mpcClient.MpcCreateTransaction("VTHO", "test_001", 1,
+		"0xe434c89a6dacc9ceb7e3e94b5f966fa445127ab7", "0x99ea76426bf86f0fe046355606f495b79dd6e180",
 		"", 0, 0, 0, 0, "")
 	assert.Nil(t, apiError, "api error not nil")
 }
 
-func TestMPCClient_MpcDropTransaction(t *testing.T) {
-	_, apiError := mpcClient.MpcDropTransaction("0100", 1, 0,
-		"test_001", 0)
-	assert.Nil(t, apiError, "api error not nil")
-}
-
-func TestMPCClient_MpcSpeedupTransaction(t *testing.T) {
-	_, apiError := mpcClient.MpcSpeedupTransaction("0100", "test_001", 0, 0, 0)
-	assert.Nil(t, apiError, "api error not nil")
-}
+//func TestMPCClient_MpcDropTransaction(t *testing.T) {
+//	_, apiError := mpcClient.MpcDropTransaction("20221213164754000373267000009730", "test_001", 1, 0, 0)
+//	assert.Nil(t, apiError, "api error not nil")
+//}
+//
+//func TestMPCClient_MpcSpeedupTransaction(t *testing.T) {
+//	_, apiError := mpcClient.MpcSpeedupTransaction("20221213164754000373267000009730", "PressTest-121316-bycaixiao-716894650154221843", 0, 0, 0)
+//	assert.Nil(t, apiError, "api error not nil")
+//}
 
 func TestMPCClient_GetMpcTransactionsByRequestIds(t *testing.T) {
 	_, apiError := mpcClient.GetMpcTransactionsByRequestIds("0100", 0)
@@ -89,7 +88,8 @@ func TestMPCClient_GetMpcTransactionsByTxHash(t *testing.T) {
 }
 
 func TestMPCClient_ListMpcWalletTransactions(t *testing.T) {
-	_, apiError := mpcClient.ListMpcWalletTransactions(0, 0, 0, "", 0, "", "", "", 0)
+	_, apiError := mpcClient.ListMpcWalletTransactions(0, 0, 0, "", "",
+		0, "", "", "", 0)
 	assert.Nil(t, apiError, "api error not nil")
 }
 

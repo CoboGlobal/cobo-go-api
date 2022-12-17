@@ -158,31 +158,35 @@ func (c MPCClient) MpcCreateTransaction(coin, requestId string, amount int, from
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
 }
 
-func (c MPCClient) MpcDropTransaction(coboId string, gasPrice, gasLimit int, requestId string, fee int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) MpcDropTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
-		"cobo_id":   coboId,
-		"gas_price": strconv.Itoa(gasPrice),
-	}
-
-	if gasLimit > 0 {
-		params["gas_limit"] = strconv.Itoa(gasLimit)
-	}
-
-	if requestId != "" {
-		params["request_id"] = requestId
+		"cobo_id":    coboId,
+		"request_id": requestId,
 	}
 
 	if fee > 0 {
 		params["fee"] = strconv.Itoa(fee)
 	}
 
+	if gasLimit > 0 {
+		params["gas_limit"] = strconv.Itoa(gasLimit)
+	}
+
+	if gasPrice > 0 {
+		params["gas_price"] = strconv.Itoa(gasPrice)
+	}
+
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) MpcSpeedupTransaction(coboId, requestId string, gasPrice, gasLimit, fee int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) MpcSpeedupTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
+	}
+
+	if fee > 0 {
+		params["fee"] = strconv.Itoa(fee)
 	}
 
 	if gasPrice > 0 {
@@ -191,10 +195,6 @@ func (c MPCClient) MpcSpeedupTransaction(coboId, requestId string, gasPrice, gas
 
 	if gasLimit > 0 {
 		params["gas_limit"] = strconv.Itoa(gasLimit)
-	}
-
-	if fee > 0 {
-		params["fee"] = strconv.Itoa(fee)
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/speedup_transaction/", params)
@@ -236,7 +236,7 @@ func (c MPCClient) GetMpcTransactionsByTxHash(txHash string, transactionType int
 	return c.Request("GET", "/v1/custody/mpc/transactions_by_tx_hash/", params)
 }
 
-func (c MPCClient) ListMpcWalletTransactions(startTime, endTime, status int, order string, transactionType int,
+func (c MPCClient) ListMpcWalletTransactions(startTime, endTime, status int, orderBy, order string, transactionType int,
 	coins, fromAddress, toAddress string, limit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{}
 
@@ -250,6 +250,10 @@ func (c MPCClient) ListMpcWalletTransactions(startTime, endTime, status int, ord
 
 	if status > 0 {
 		params["status"] = strconv.Itoa(status)
+	}
+
+	if orderBy != "" {
+		params["order_by"] = orderBy
 	}
 
 	if order != "" {
