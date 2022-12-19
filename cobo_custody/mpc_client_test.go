@@ -55,13 +55,13 @@ func TestMPCClient_GetMpcUnspentInputsList(t *testing.T) {
 	assert.Nil(t, apiError, "api error not nil")
 }
 
-func TestMPCClient_MpcCreateTransaction(t *testing.T) {
-	_, apiError := mpcClient.MpcCreateTransaction("VTHO", "test_001", 1,
-		"0xe434c89a6dacc9ceb7e3e94b5f966fa445127ab7", "0x99ea76426bf86f0fe046355606f495b79dd6e180",
-		"", 0, 0, 0, 0, "")
-	assert.Nil(t, apiError, "api error not nil")
-}
-
+//func TestMPCClient_MpcCreateTransaction(t *testing.T) {
+//	_, apiError := mpcClient.MpcCreateTransaction("VTHO", "test_001", 1,
+//		"0xe434c89a6dacc9ceb7e3e94b5f966fa445127ab7", "0x99ea76426bf86f0fe046355606f495b79dd6e180",
+//		"", 0, 0, 0, 0, "")
+//	assert.Nil(t, apiError, "api error not nil")
+//}
+//
 //func TestMPCClient_MpcDropTransaction(t *testing.T) {
 //	_, apiError := mpcClient.MpcDropTransaction("20221213164754000373267000009730", "test_001", 1, 0, 0)
 //	assert.Nil(t, apiError, "api error not nil")
