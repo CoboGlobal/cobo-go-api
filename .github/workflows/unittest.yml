@@ -29,10 +29,10 @@ jobs:
 
     - name: run testcase
       env:
-        ENV: "${{ github.event.inputs.environment == 'prod' && 'prod' || 'sandbox'}}"
-        SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.SANDBOXSECRET}}"
-        Web3SECRET: "${{secrets.SANDBOXWEB3SECRET}}"
-        MPCSECRET: "${{secrets.SANDBOXMPCSECRET}}"
+        ENV: "${{ github.event.inputs.environment == 'prod' && 'prod' || 'sandbox' }}"
+        SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.SANDBOXSECRET }}"
+        Web3SECRET: "${{ secrets.SANDBOXWEB3SECRET }}"
+        MPCSECRET: "${{ secrets.SANDBOXMPCSECRET }}"
       run: |
         cd cobo_custody 
         go test -env $ENV -secret $SECRET -web3Secret $Web3SECRET -mpcSecret $MPCSECRET
