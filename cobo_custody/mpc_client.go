@@ -33,6 +33,15 @@ func (c MPCClient) GetSupportedCoins(chainCode string) (*simplejson.Json, *ApiEr
 	return c.Request("GET", "/v1/custody/mpc/get_supported_coins/", params)
 }
 
+func (c MPCClient) IsValidAddress(coin string, address string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin":    coin,
+		"address": address,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/is_valid_address/", params)
+}
+
 func (c MPCClient) GetMainAddress(chainCode string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
