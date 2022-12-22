@@ -19,13 +19,13 @@ type MPCClient struct {
 	Debug  bool
 }
 
-func (c MPCClient) GetMpcSupportedChains() (*simplejson.Json, *ApiError) {
+func (c MPCClient) GetSupportedChains() (*simplejson.Json, *ApiError) {
 	var params = map[string]string{}
 
 	return c.Request("GET", "/v1/custody/mpc/get_supported_chains/", params)
 }
 
-func (c MPCClient) GetMpcSupportedCoins(chainCode string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GetSupportedCoins(chainCode string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
 	}
@@ -33,7 +33,7 @@ func (c MPCClient) GetMpcSupportedCoins(chainCode string) (*simplejson.Json, *Ap
 	return c.Request("GET", "/v1/custody/mpc/get_supported_coins/", params)
 }
 
-func (c MPCClient) GetMpcMainAddress(chainCode string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GetMainAddress(chainCode string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
 	}
@@ -41,7 +41,7 @@ func (c MPCClient) GetMpcMainAddress(chainCode string) (*simplejson.Json, *ApiEr
 	return c.Request("GET", "/v1/custody/mpc/get_main_address/", params)
 }
 
-func (c MPCClient) MpcBatchGenerateAddresses(chainCode string, count int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GenerateAddresses(chainCode string, count int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
 		"count":      strconv.Itoa(count),
@@ -50,7 +50,7 @@ func (c MPCClient) MpcBatchGenerateAddresses(chainCode string, count int) (*simp
 	return c.Request("POST", "/v1/custody/mpc/generate_addresses/", params)
 }
 
-func (c MPCClient) GetMpcAddressList(chainCode, startId, endId string, limit, sortFlag int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) ListAddresses(chainCode, startId, endId string, limit, sortFlag int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
 	}
@@ -74,7 +74,7 @@ func (c MPCClient) GetMpcAddressList(chainCode, startId, endId string, limit, so
 	return c.Request("GET", "/v1/custody/mpc/list_addresses/", params)
 }
 
-func (c MPCClient) GetMpcBalance(address, chainCode, coin string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GetBalance(address, chainCode, coin string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"address": address,
 	}
@@ -90,7 +90,7 @@ func (c MPCClient) GetMpcBalance(address, chainCode, coin string) (*simplejson.J
 	return c.Request("GET", "/v1/custody/mpc/get_balance/", params)
 }
 
-func (c MPCClient) ListMpcBalances(pageIndex, pageLength int, coin string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) ListBalances(pageIndex, pageLength int, coin string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"page_index":  strconv.Itoa(pageIndex),
 		"page_length": strconv.Itoa(pageLength),
@@ -103,7 +103,7 @@ func (c MPCClient) ListMpcBalances(pageIndex, pageLength int, coin string) (*sim
 	return c.Request("GET", "/v1/custody/mpc/list_balances/", params)
 }
 
-func (c MPCClient) GetMpcUnspentInputsList(address, coin string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"address": address,
 		"coin":    coin,
@@ -112,7 +112,7 @@ func (c MPCClient) GetMpcUnspentInputsList(address, coin string) (*simplejson.Js
 	return c.Request("GET", "/v1/custody/mpc/list_spendable/", params)
 }
 
-func (c MPCClient) MpcCreateTransaction(coin, requestId string, amount int, fromAddr, toAddr, toAddressDetails string,
+func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAddr, toAddr, toAddressDetails string,
 	fee, gasPrice, gasLimit, operation int, extraParameters string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
@@ -158,7 +158,7 @@ func (c MPCClient) MpcCreateTransaction(coin, requestId string, amount int, from
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
 }
 
-func (c MPCClient) MpcDropTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) DropTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -179,7 +179,7 @@ func (c MPCClient) MpcDropTransaction(coboId, requestId string, fee, gasPrice, g
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) MpcSpeedupTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -200,7 +200,7 @@ func (c MPCClient) MpcSpeedupTransaction(coboId, requestId string, fee, gasPrice
 	return c.Request("POST", "/v1/custody/mpc/speedup_transaction/", params)
 }
 
-func (c MPCClient) GetMpcTransactionsByRequestIds(requestIds string, status int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) TransactionsByRequestIds(requestIds string, status int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"request_ids": requestIds,
 	}
@@ -212,7 +212,7 @@ func (c MPCClient) GetMpcTransactionsByRequestIds(requestIds string, status int)
 	return c.Request("GET", "/v1/custody/mpc/transactions_by_request_ids/", params)
 }
 
-func (c MPCClient) GetMpcTransactionsByCoboIds(coboIds string, status int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) TransactionsByCoboIds(coboIds string, status int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_ids": coboIds,
 	}
@@ -224,7 +224,7 @@ func (c MPCClient) GetMpcTransactionsByCoboIds(coboIds string, status int) (*sim
 	return c.Request("GET", "/v1/custody/mpc/transactions_by_cobo_ids/", params)
 }
 
-func (c MPCClient) GetMpcTransactionsByTxHash(txHash string, transactionType int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) TransactionsByTxHash(txHash string, transactionType int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"tx_hash": txHash,
 	}
@@ -236,7 +236,7 @@ func (c MPCClient) GetMpcTransactionsByTxHash(txHash string, transactionType int
 	return c.Request("GET", "/v1/custody/mpc/transactions_by_tx_hash/", params)
 }
 
-func (c MPCClient) ListMpcWalletTransactions(startTime, endTime, status int, orderBy, order string, transactionType int,
+func (c MPCClient) ListTransactions(startTime, endTime, status int, orderBy, order string, transactionType int,
 	coins, fromAddress, toAddress string, limit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{}
 
@@ -283,7 +283,7 @@ func (c MPCClient) ListMpcWalletTransactions(startTime, endTime, status int, ord
 	return c.Request("GET", "/v1/custody/mpc/list_transactions/", params)
 }
 
-func (c MPCClient) EstimateMpcFee(coin string, amount int, address string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) EstimateFee(coin string, amount int, address string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"amount":  strconv.Itoa(amount),
@@ -293,7 +293,7 @@ func (c MPCClient) EstimateMpcFee(coin string, amount int, address string) (*sim
 	return c.Request("GET", "/v1/custody/mpc/estimate_fee/", params)
 }
 
-func (c MPCClient) ListMpcTssNodeRequests(requestType, status int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) ListTssNodeRequests(requestType, status int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{}
 
 	if requestType > 0 {
