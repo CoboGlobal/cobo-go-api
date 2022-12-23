@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.32.0] (2022-12-23)
+[v0.32.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.31.0...v0.32.0
+
+### Changed
+- Update MPC client method. https://github.com/CoboCustody/cobo-go-api/pull/12, https://github.com/CoboCustody/cobo-go-api/pull/13
+
+
 ## [v0.31.0] (2022-12-20)
 [v0.31.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.30.0...v0.31.0
 
