@@ -27,7 +27,7 @@ func main() {
 	fee := 0
 	operation := 100 // Transfer
 	extraParameters := ""
-	
+
 	// get estimate fee
 	estimateFee, apiError := mpcClient.EstimateFee(coin, amount, toAddress)
 	if apiError != nil {
@@ -38,9 +38,21 @@ func main() {
 	println(string(str))
 	gasPrice, _ := estimateFee.GetPath("average", "gas_price").Int()
 	gasLimit, _ := estimateFee.GetPath("average", "gas_limit").Int()
-	
+
 	// create transaction
-	transactionResp, apiError := mpcClient.CreateTransaction(coin, requestId, amount, fromAddress, toAddress, toAddressDetails, fee, gasPrice, gasLimit, operation, extraParameters)
+	transactionResp, apiError := mpcClient.CreateTransaction(
+		coin,
+		requestId,
+		amount,
+		fromAddress,
+		toAddress,
+		toAddressDetails,
+		fee,
+		gasPrice,
+		gasLimit,
+		operation,
+		extraParameters,
+	)
 	if apiError != nil {
 		println(apiError.ErrorCode, apiError.ErrorMessage, apiError.ErrorId)
 		return
@@ -50,7 +62,7 @@ func main() {
 	coboID, _ := transactionResp.GetPath("cobo_id").String()
 	println(coboID)
 
-	// get transaction by request_id
+	// get transaction
 	status := 0
 	transactionResp, apiError = mpcClient.TransactionsByRequestIds(requestId, status)
 	if apiError != nil {
