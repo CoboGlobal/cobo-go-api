@@ -136,7 +136,7 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 		params["to_address"] = toAddr
 	}
 
-	if amount > 0 {
+	if amount >= 0 {
 		params["amount"] = strconv.Itoa(amount)
 	}
 
