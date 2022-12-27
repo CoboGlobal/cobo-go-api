@@ -292,11 +292,15 @@ func (c MPCClient) ListTransactions(startTime, endTime, status int, orderBy, ord
 	return c.Request("GET", "/v1/custody/mpc/list_transactions/", params)
 }
 
-func (c MPCClient) EstimateFee(coin string, amount int, address string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_cobo_id string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"amount":  strconv.Itoa(amount),
 		"address": address,
+	}
+
+	if replace_cobo_id != "" {
+		params["replace_cobo_id"] = replace_cobo_id
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/estimate_fee/", params)
