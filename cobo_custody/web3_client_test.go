@@ -111,7 +111,7 @@ func TestWeb3Client_Web3Contract(t *testing.T) {
 	args := "[\"0x040149e133077aebcfe4594e00638135eb4bc77f\", 1]"
 	amount := big.NewInt(1)
 
-	_, apiError := web3Client.Web3Contract(chainCode, requestId, walletAddr, contractAddr, methodId, methodName, args, amount)
+	_, apiError := web3Client.Web3Contract(chainCode, requestId, walletAddr, contractAddr, methodId, methodName, args, amount, nil)
 	assert.Nil(t, apiError, "api error not nil")
 }
 
