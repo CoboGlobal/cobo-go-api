@@ -117,7 +117,9 @@ func (c Web3Client) Web3Withdraw(coin string, requestId string, fromAddr string,
 		"request_id": requestId,
 		"from_addr":  fromAddr,
 		"to_addr":    toAddr,
-		"amount":     amount.String(),
+	}
+	if amount != nil {
+		params["amount"] = amount.String()
 	}
 
 	return c.Request("POST", "/v1/custody/web3_withdraw/", params)
@@ -132,7 +134,7 @@ func (c Web3Client) GetWeb3WithdrawTransaction(requestId string) (*simplejson.Js
 }
 
 func (c Web3Client) Web3Contract(chainCode string, requestId string, walletAddr string, contractAddr string, methodId string,
-	methodName string, args string, amount *big.Int) (*simplejson.Json, *ApiError) {
+	methodName string, args string, amount *big.Int, gasLimit *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code":    chainCode,
 		"request_id":    requestId,
@@ -141,7 +143,12 @@ func (c Web3Client) Web3Contract(chainCode string, requestId string, walletAddr 
 		"method_id":     methodId,
 		"method_name":   methodName,
 		"args":          args,
-		"amount":        amount.String(),
+	}
+	if amount != nil {
+		params["amount"] = amount.String()
+	}
+	if gasLimit != nil {
+		params["gas_limit"] = gasLimit.String()
 	}
 
 	return c.Request("POST", "/v1/custody/web3_contract/", params)
