@@ -124,11 +124,11 @@ func TestWeb3Client_GetWeb3ContractTransaction(t *testing.T) {
 
 func TestWeb3Client_ListWeb3WalletTransactions(t *testing.T) {
 	address := "0xd2176409a1ac767824921e45b7ee300745cb1e3f"
-	coin := "ETH"
+	chainCode := "ETH"
 	maxId := ""
 	minId := "20221009161459000368403000001228"
 	limit := 10
 
-	_, apiError := web3Client.ListWeb3WalletTransactions(address, coin, maxId, minId, limit)
+	_, apiError := web3Client.ListWeb3WalletTransactions(address, chainCode, maxId, minId, limit)
 	assert.Nil(t, apiError, "api error not nil")
 }

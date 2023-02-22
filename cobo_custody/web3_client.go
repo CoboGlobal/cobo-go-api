@@ -162,13 +162,13 @@ func (c Web3Client) GetWeb3ContractTransaction(requestId string) (*simplejson.Js
 	return c.Request("GET", "/v1/custody/web3_get_contract_transaction/", params)
 }
 
-func (c Web3Client) ListWeb3WalletTransactions(address string, coin string, maxId string, minId string, limit int) (*simplejson.Json, *ApiError) {
+func (c Web3Client) ListWeb3WalletTransactions(address string, chainCode string, maxId string, minId string, limit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"address": address,
 	}
 
-	if coin != "" {
-		params["coin"] = coin
+	if chainCode != "" {
+		params["chain_code"] = chainCode
 	}
 	if maxId != "" {
 		params["max_id"] = maxId
