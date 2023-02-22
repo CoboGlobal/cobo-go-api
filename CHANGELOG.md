@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.34.0] (2023-02-16)
+[v0.34.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.33.0...v0.34.0
+### Changed
+- Update MPC wallet SaaS api. https://github.com/CoboCustody/cobo-go-api/pull/16
+- Update Web3 wallet SaaS api. https://github.com/CoboCustody/cobo-go-api/pull/20
+
 ## [v0.33.0] (2022-12-26)
 [v0.33.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.32.0...v0.33.0
 
