@@ -18,6 +18,11 @@ func TestMPCClient_GetSupportedCoins(t *testing.T) {
 	assert.Nil(t, apiError, "api error not nil")
 }
 
+func TestMPCClient_GetWalletSupportedCoins(t *testing.T) {
+	_, apiError := mpcClient.GetWalletSupportedCoins()
+	assert.Nil(t, apiError, "api error not nil")
+}
+
 func TestMPCClient_IsValidAddress(t *testing.T) {
 	coin := "ETH"
 	address := "0xb2ad1bdf4a1d766e8faeb94689547d3fede5792c"
