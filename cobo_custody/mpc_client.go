@@ -128,7 +128,7 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 }
 
 func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAddr, toAddr, toAddressDetails string,
-	fee, gasPrice, gasLimit, operation int, extraParameters string) (*simplejson.Json, *ApiError) {
+	fee float64, gasPrice, gasLimit, operation int, extraParameters string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -151,7 +151,7 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 	}
 
 	if fee > 0 {
-		params["fee"] = strconv.Itoa(fee)
+		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
 	}
 
 	if gasPrice > 0 {
@@ -173,14 +173,14 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
 }
 
-func (c MPCClient) DropTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) DropTransaction(coboId, requestId string, fee float64, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
 	}
 
 	if fee > 0 {
-		params["fee"] = strconv.Itoa(fee)
+		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
 	}
 
 	if gasLimit > 0 {
@@ -194,14 +194,14 @@ func (c MPCClient) DropTransaction(coboId, requestId string, fee, gasPrice, gasL
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee float64, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
 	}
 
 	if fee > 0 {
-		params["fee"] = strconv.Itoa(fee)
+		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
 	}
 
 	if gasPrice > 0 {
@@ -316,7 +316,7 @@ func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_
 		params["to_address_details"] = to_address_details
 	}
 	if fee > 0 {
-		params["fee"] = strconv.FormatFloat(fee, 'f', 1, 64)
+		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
 	}
 	if gas_price > 0 {
 		params["gas_price"] = strconv.Itoa(gas_price)
