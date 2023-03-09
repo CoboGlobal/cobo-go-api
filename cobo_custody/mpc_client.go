@@ -298,7 +298,8 @@ func (c MPCClient) ListTransactions(startTime, endTime, status int, orderBy, ord
 	return c.Request("GET", "/v1/custody/mpc/list_transactions/", params)
 }
 
-func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_cobo_id string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_cobo_id string, from_address string,
+	to_address_details string, fee float64, gas_price int, gas_limit int, extra_parameters string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"amount":  strconv.Itoa(amount),
@@ -307,6 +308,24 @@ func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_
 
 	if replace_cobo_id != "" {
 		params["replace_cobo_id"] = replace_cobo_id
+	}
+	if from_address != "" {
+		params["from_address"] = from_address
+	}
+	if to_address_details != "" {
+		params["to_address_details"] = to_address_details
+	}
+	if fee > 0 {
+		params["fee"] = strconv.FormatFloat(fee, 'f', 1, 64)
+	}
+	if gas_price > 0 {
+		params["gas_price"] = strconv.Itoa(gas_price)
+	}
+	if gas_limit > 0 {
+		params["gas_limit"] = strconv.Itoa(gas_limit)
+	}
+	if extra_parameters != "" {
+		params["extra_parameters"] = extra_parameters
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/estimate_fee/", params)
