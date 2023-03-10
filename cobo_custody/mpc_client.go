@@ -301,11 +301,15 @@ func (c MPCClient) ListTransactions(startTime, endTime, status int, orderBy, ord
 func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_cobo_id string, from_address string,
 	to_address_details string, fee float64, gas_price int, gas_limit int, extra_parameters string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
-		"coin":    coin,
-		"amount":  strconv.Itoa(amount),
-		"address": address,
+		"coin": coin,
 	}
 
+	if amount > 0 {
+		params["amount"] = strconv.Itoa(amount)
+	}
+	if address != "" {
+		params["address"] = address
+	}
 	if replace_cobo_id != "" {
 		params["replace_cobo_id"] = replace_cobo_id
 	}
