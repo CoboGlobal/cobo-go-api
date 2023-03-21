@@ -34,6 +34,14 @@ func (c MPCClient) GetSupportedCoins(chainCode string) (*simplejson.Json, *ApiEr
 	return c.Request("GET", "/v1/custody/mpc/get_supported_coins/", params)
 }
 
+func (c MPCClient) GetSupportedNftCollections(chainCode string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"chain_code": chainCode,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/get_supported_nft_collections/", params)
+}
+
 func (c MPCClient) GetWalletSupportedCoins() (*simplejson.Json, *ApiError) {
 	var params = map[string]string{}
 
@@ -129,7 +137,7 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 }
 
 func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAddr, toAddr, toAddressDetails string,
-	fee float64, gasPrice, gasLimit, operation int, extraParameters string) (*simplejson.Json, *ApiError) {
+	fee float64, gasPrice, gasLimit, operation int, extraParameters string, maxFee int, maxPriorityFee int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -169,6 +177,26 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 
 	if extraParameters != "" {
 		params["extra_parameters"] = extraParameters
+	}
+
+	if maxFee > 0 {
+		params["max_fee"] = strconv.Itoa(maxFee)
+	}
+
+	if maxPriorityFee > 0 {
+		params["max_priority_fee"] = strconv.Itoa(maxPriorityFee)
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
+}
+
+func (c MPCClient) SignMessage(chainCode, requestId, fromAddr string, signVersion int, extraParameters string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"chain_code":       chainCode,
+		"request_id":       requestId,
+		"from_address":     fromAddr,
+		"sign_version":     strconv.Itoa(signVersion),
+		"extra_parameters": extraParameters,
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
