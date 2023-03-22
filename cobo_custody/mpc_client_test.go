@@ -108,7 +108,7 @@ func TestMPCClient_ListTransactions(t *testing.T) {
 }
 
 func TestMPCClient_EstimateFee(t *testing.T) {
-	_, apiError := mpcClient.EstimateFee("ETH", 0, "", "")
+	_, apiError := mpcClient.EstimateFee("ETH", 0, "", "", "", "", 0, 0, 0, "")
 	assert.Nil(t, apiError, "api error not nil")
 }
 
