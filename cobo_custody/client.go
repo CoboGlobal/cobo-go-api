@@ -235,7 +235,7 @@ func (c Client) GetStakingHistory() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/staking_history/", map[string]string{})
 }
 
-func (c Client) request(method string, path string, params map[string]string) string {
+func (c Client) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().Unix()*1000)
 	sorted := SortParams(params)
@@ -256,7 +256,11 @@ func (c Client) request(method string, path string, params map[string]string) st
 		fmt.Println("request >>>>>>>>")
 		fmt.Println(method, "\n", path, "\n", params, "\n", content, "\n", req.Header)
 	}
-	resp, _ := httpClient.Do(req)
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Println("http request err", err.Error())
+		return "", err
+	}
 
 	defer resp.Body.Close()
 
@@ -272,11 +276,14 @@ func (c Client) request(method string, path string, params map[string]string) st
 	if !success {
 		panic("response signature verify failed")
 	}
-	return string(body)
+	return string(body), nil
 }
 
 func (c Client) Request(method string, path string, params map[string]string) (*simplejson.Json, *ApiError) {
-	jsonString := c.request(method, path, params)
+	jsonString, err := c.request(method, path, params)
+	if err != nil {
+		return nil, &ApiError{ErrorMessage: err.Error()}
+	}
 	json, _ := simplejson.NewJson([]byte(jsonString))
 	success, _ := json.Get("success").Bool()
 	if !success {
@@ -296,11 +303,29 @@ func (c Client) Request(method string, path string, params map[string]string) (*
 }
 
 func (c Client) VerifyEcc(message string, signature string) bool {
-	pubKeyBytes, _ := hex.DecodeString(c.Env.CoboPub)
-	pubKey, _ := btcec.ParsePubKey(pubKeyBytes, btcec.S256())
+	pubKeyBytes, err := hex.DecodeString(c.Env.CoboPub)
+	if err != nil {
+		fmt.Println("decode pubkey error ", err)
+		return false
+	}
 
-	sigBytes, _ := hex.DecodeString(signature)
-	sigObj, _ := btcec.ParseSignature(sigBytes, btcec.S256())
+	pubKey, err := btcec.ParsePubKey(pubKeyBytes, btcec.S256())
+	if err != nil {
+		fmt.Println("parse pubkey error ", err)
+		return false
+	}
+
+	sigBytes, err := hex.DecodeString(signature)
+	if err != nil {
+		fmt.Println("decode signature error ", err)
+		return false
+	}
+
+	sigObj, err := btcec.ParseSignature(sigBytes, btcec.S256())
+	if err != nil {
+		fmt.Println("parse signature error ", err)
+		return false
+	}
 
 	verified := sigObj.Verify([]byte(Hash256x2(message)), pubKey)
 	return verified
