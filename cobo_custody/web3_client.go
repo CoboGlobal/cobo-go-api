@@ -185,7 +185,7 @@ func (c Web3Client) ListWeb3WalletTransactions(address string, chainCode string,
 
 func (c Web3Client) request(method string, path string, params map[string]string) string {
 	httpClient := &http.Client{}
-	nonce := fmt.Sprintf("%d", time.Now().Unix()*1000)
+	nonce := fmt.Sprintf("%d", time.Now().UnixMicro())
 	sorted := SortParams(params)
 	var req *http.Request
 	if method == "POST" {
