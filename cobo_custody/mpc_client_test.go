@@ -60,7 +60,7 @@ func TestMPCClient_GetBalance(t *testing.T) {
 }
 
 func TestMPCClient_ListBalances(t *testing.T) {
-	_, apiError := mpcClient.ListBalances(0, 10, "")
+	_, apiError := mpcClient.ListBalances(0, 10, "", "")
 	assert.Nil(t, apiError, "api error not nil")
 }
 
