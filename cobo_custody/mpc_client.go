@@ -114,7 +114,7 @@ func (c MPCClient) GetBalance(address, chainCode, coin string) (*simplejson.Json
 	return c.Request("GET", "/v1/custody/mpc/get_balance/", params)
 }
 
-func (c MPCClient) ListBalances(pageIndex, pageLength int, coin string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) ListBalances(pageIndex, pageLength int, coin string, chainCode string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"page_index":  strconv.Itoa(pageIndex),
 		"page_length": strconv.Itoa(pageLength),
@@ -122,6 +122,9 @@ func (c MPCClient) ListBalances(pageIndex, pageLength int, coin string) (*simple
 
 	if coin != "" {
 		params["coin"] = coin
+	}
+	if chainCode != "" {
+		params["chain_code"] = chainCode
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/list_balances/", params)
