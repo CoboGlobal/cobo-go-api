@@ -201,7 +201,7 @@ func (c MPCClient) SignMessage(chainCode, requestId, fromAddr string, signVersio
 		"extra_parameters": extraParameters,
 	}
 
-	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
+	return c.Request("POST", "/v1/custody/mpc/sign_message/", params)
 }
 
 func (c MPCClient) DropTransaction(coboId, requestId string, fee float64, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
