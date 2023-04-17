@@ -2,6 +2,7 @@ package cobo_custody
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -374,6 +375,15 @@ func (c MPCClient) request(method string, path string, params map[string]string)
 	if err != nil {
 		fmt.Println("http request err", err.Error())
 		return "", err
+	}
+	if resp.Header == nil {
+		return "", errors.New("http resp header is nil")
+	}
+	if len(resp.Header["Biz-Timestamp"]) <= 0 {
+		return "", errors.New("http resp header timestamp is illegal")
+	}
+	if len(resp.Header["Biz-Resp-Signature"]) <= 0 {
+		return "", errors.New("http resp header signature is illegal")
 	}
 
 	defer resp.Body.Close()
