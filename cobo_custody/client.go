@@ -3,6 +3,7 @@ package cobo_custody
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/big"
@@ -260,6 +261,15 @@ func (c Client) request(method string, path string, params map[string]string) (s
 	if err != nil {
 		fmt.Println("http request err", err.Error())
 		return "", err
+	}
+	if resp.Header == nil {
+		return "", errors.New("http resp header is nil")
+	}
+	if resp.Header["Biz-Timestamp"] == nil || len(resp.Header["Biz-Timestamp"]) <= 0 {
+		return "", errors.New("http resp header timestamp is illegal")
+	}
+	if resp.Header["Biz-Resp-Signature"] == nil || len(resp.Header["Biz-Resp-Signature"]) <= 0 {
+		return "", errors.New("http resp header signature is illegal")
 	}
 
 	defer resp.Body.Close()

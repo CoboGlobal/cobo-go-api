@@ -2,6 +2,7 @@ package cobo_custody
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/big"
@@ -183,7 +184,7 @@ func (c Web3Client) ListWeb3WalletTransactions(address string, chainCode string,
 	return c.Request("GET", "/v1/custody/web3_list_wallet_transactions/", params)
 }
 
-func (c Web3Client) request(method string, path string, params map[string]string) string {
+func (c Web3Client) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixMicro())
 	sorted := SortParams(params)
@@ -204,7 +205,20 @@ func (c Web3Client) request(method string, path string, params map[string]string
 		fmt.Println("request >>>>>>>>")
 		fmt.Println(method, "\n", path, "\n", params, "\n", content, "\n", req.Header)
 	}
-	resp, _ := httpClient.Do(req)
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Println("http request err", err.Error())
+		return "", err
+	}
+	if resp.Header == nil {
+		return "", errors.New("http resp header is nil")
+	}
+	if resp.Header["Biz-Timestamp"] == nil || len(resp.Header["Biz-Timestamp"]) <= 0 {
+		return "", errors.New("http resp header timestamp is illegal")
+	}
+	if resp.Header["Biz-Resp-Signature"] == nil || len(resp.Header["Biz-Resp-Signature"]) <= 0 {
+		return "", errors.New("http resp header signature is illegal")
+	}
 
 	defer resp.Body.Close()
 
@@ -220,11 +234,14 @@ func (c Web3Client) request(method string, path string, params map[string]string
 	if !success {
 		panic("response signature verify failed")
 	}
-	return string(body)
+	return string(body), nil
 }
 
 func (c Web3Client) Request(method string, path string, params map[string]string) (*simplejson.Json, *ApiError) {
-	jsonString := c.request(method, path, params)
+	jsonString, err := c.request(method, path, params)
+	if err != nil {
+		return nil, &ApiError{ErrorMessage: err.Error()}
+	}
 	json, _ := simplejson.NewJson([]byte(jsonString))
 	success, _ := json.Get("success").Bool()
 	if !success {
