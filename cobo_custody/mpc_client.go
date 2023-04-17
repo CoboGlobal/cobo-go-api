@@ -379,10 +379,10 @@ func (c MPCClient) request(method string, path string, params map[string]string)
 	if resp.Header == nil {
 		return "", errors.New("http resp header is nil")
 	}
-	if resp.Header["Biz-Timestamp"] == nil || len(resp.Header["Biz-Timestamp"]) <= 0 {
+	if len(resp.Header["Biz-Timestamp"]) <= 0 {
 		return "", errors.New("http resp header timestamp is illegal")
 	}
-	if resp.Header["Biz-Resp-Signature"] == nil || len(resp.Header["Biz-Resp-Signature"]) <= 0 {
+	if len(resp.Header["Biz-Resp-Signature"]) <= 0 {
 		return "", errors.New("http resp header signature is illegal")
 	}
 
