@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.38.0] (2023-04-17)
+[v0.38.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.37.0...v0.38.0
+### Changed
+- check resp timestamp and signature. https://github.com/CoboCustody/cobo-go-api/pull/30
+
 ## [v0.37.0] (2023-04-10)
 [v0.37.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.36.0...v0.37.0
 ### Changed
