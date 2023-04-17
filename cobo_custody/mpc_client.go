@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
+	"math/big"
 	"net/http"
 	"strconv"
 	"strings"
@@ -138,8 +139,8 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 	return c.Request("GET", "/v1/custody/mpc/list_spendable/", params)
 }
 
-func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAddr, toAddr, toAddressDetails string,
-	fee float64, gasPrice, gasLimit, operation int, extraParameters string, maxFee int, maxPriorityFee int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fromAddr, toAddr, toAddressDetails string,
+	fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, operation int, extraParameters string, maxFee *big.Int, maxPriorityFee *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -153,24 +154,24 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 		params["to_address"] = toAddr
 	}
 
-	if amount >= 0 {
-		params["amount"] = strconv.Itoa(amount)
+	if amount != nil {
+		params["amount"] = amount.String()
 	}
 
 	if toAddressDetails != "" {
 		params["to_address_details"] = toAddressDetails
 	}
 
-	if fee > 0 {
-		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
+	if fee != nil {
+		params["fee"] = fee.String()
 	}
 
-	if gasPrice > 0 {
-		params["gas_price"] = strconv.Itoa(gasPrice)
+	if gasPrice != nil {
+		params["gas_price"] = gasPrice.String()
 	}
 
-	if gasLimit > 0 {
-		params["gas_limit"] = strconv.Itoa(gasLimit)
+	if gasLimit != nil {
+		params["gas_limit"] = gasLimit.String()
 	}
 
 	if operation >= 0 {
@@ -181,12 +182,12 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount int, fromAdd
 		params["extra_parameters"] = extraParameters
 	}
 
-	if maxFee > 0 {
-		params["max_fee"] = strconv.Itoa(maxFee)
+	if maxFee != nil {
+		params["max_fee"] = maxFee.String()
 	}
 
-	if maxPriorityFee > 0 {
-		params["max_priority_fee"] = strconv.Itoa(maxPriorityFee)
+	if maxPriorityFee != nil {
+		params["max_priority_fee"] = maxPriorityFee.String()
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
@@ -204,43 +205,43 @@ func (c MPCClient) SignMessage(chainCode, requestId, fromAddr string, signVersio
 	return c.Request("POST", "/v1/custody/mpc/sign_message/", params)
 }
 
-func (c MPCClient) DropTransaction(coboId, requestId string, fee float64, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
 	}
 
-	if fee > 0 {
-		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
+	if fee != nil {
+		params["fee"] = fee.String()
 	}
 
-	if gasLimit > 0 {
-		params["gas_limit"] = strconv.Itoa(gasLimit)
+	if gasLimit != nil {
+		params["gas_limit"] = gasLimit.String()
 	}
 
-	if gasPrice > 0 {
-		params["gas_price"] = strconv.Itoa(gasPrice)
+	if gasPrice != nil {
+		params["gas_price"] = gasPrice.String()
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee float64, gasPrice, gasLimit int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
 	}
 
-	if fee > 0 {
-		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
+	if fee != nil {
+		params["fee"] = fee.String()
 	}
 
-	if gasPrice > 0 {
-		params["gas_price"] = strconv.Itoa(gasPrice)
+	if gasLimit != nil {
+		params["gas_limit"] = gasLimit.String()
 	}
 
-	if gasLimit > 0 {
-		params["gas_limit"] = strconv.Itoa(gasLimit)
+	if gasPrice != nil {
+		params["gas_price"] = gasPrice.String()
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/speedup_transaction/", params)
@@ -329,14 +330,14 @@ func (c MPCClient) ListTransactions(startTime, endTime, status int, orderBy, ord
 	return c.Request("GET", "/v1/custody/mpc/list_transactions/", params)
 }
 
-func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_cobo_id string, from_address string,
-	to_address_details string, fee float64, gas_price int, gas_limit int, extra_parameters string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) EstimateFee(coin string, amount *big.Int, address string, replace_cobo_id string, from_address string,
+	to_address_details string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, extra_parameters string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin": coin,
 	}
 
-	if amount > 0 {
-		params["amount"] = strconv.Itoa(amount)
+	if amount != nil {
+		params["amount"] = amount.String()
 	}
 	if address != "" {
 		params["address"] = address
@@ -350,14 +351,14 @@ func (c MPCClient) EstimateFee(coin string, amount int, address string, replace_
 	if to_address_details != "" {
 		params["to_address_details"] = to_address_details
 	}
-	if fee > 0 {
-		params["fee"] = strconv.FormatFloat(fee, 'f', 8, 64)
+	if fee != nil {
+		params["fee"] = fee.String()
 	}
-	if gas_price > 0 {
-		params["gas_price"] = strconv.Itoa(gas_price)
+	if gasPrice != nil {
+		params["gas_price"] = gasPrice.String()
 	}
-	if gas_limit > 0 {
-		params["gas_limit"] = strconv.Itoa(gas_limit)
+	if gasLimit != nil {
+		params["gas_limit"] = gasLimit.String()
 	}
 	if extra_parameters != "" {
 		params["extra_parameters"] = extra_parameters
