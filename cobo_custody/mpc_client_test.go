@@ -60,7 +60,7 @@ func TestMPCClient_GetBalance(t *testing.T) {
 }
 
 func TestMPCClient_ListBalances(t *testing.T) {
-	_, apiError := mpcClient.ListBalances(0, 10, "")
+	_, apiError := mpcClient.ListBalances(0, 10, "", "")
 	assert.Nil(t, apiError, "api error not nil")
 }
 
@@ -108,7 +108,7 @@ func TestMPCClient_ListTransactions(t *testing.T) {
 }
 
 func TestMPCClient_EstimateFee(t *testing.T) {
-	_, apiError := mpcClient.EstimateFee("ETH", 0, "", "", "", "", 0, 0, 0, "")
+	_, apiError := mpcClient.EstimateFee("ETH", nil, "", "", "", "", nil, nil, nil, "")
 	assert.Nil(t, apiError, "api error not nil")
 }
 
