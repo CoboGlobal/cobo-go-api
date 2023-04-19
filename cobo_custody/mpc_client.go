@@ -382,6 +382,14 @@ func (c MPCClient) ListTssNodeRequests(requestType, status int) (*simplejson.Jso
 	return c.Request("GET", "/v1/custody/mpc/list_tss_node_requests/", params)
 }
 
+func (c MPCClient) RetryDoubleCheck(requestId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/retry_double_check/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixMicro())
