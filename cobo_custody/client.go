@@ -238,7 +238,7 @@ func (c Client) GetStakingHistory() (*simplejson.Json, *ApiError) {
 
 func (c Client) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
-	nonce := fmt.Sprintf("%d", time.Now().UnixMicro())
+	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
 	sorted := SortParams(params)
 	var req *http.Request
 	if method == "POST" {
