@@ -191,6 +191,9 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fr
 	if maxPriorityFee != nil {
 		params["max_priority_fee"] = maxPriorityFee.String()
 	}
+	if feeAmount != nil {
+		params["fee_amount"] = feeAmount.String()
+	}
 
 	if feeAmount != nil {
 		params["fee_amount"] = feeAmount.String()
