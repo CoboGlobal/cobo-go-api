@@ -210,7 +210,7 @@ func (c MPCClient) SignMessage(chainCode, requestId, fromAddr string, signVersio
 	return c.Request("POST", "/v1/custody/mpc/sign_message/", params)
 }
 
-func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, feeAmount *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -226,12 +226,16 @@ func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gas
 
 	if gasPrice != nil {
 		params["gas_price"] = gasPrice.String()
+	}
+
+	if feeAmount != nil {
+		params["fee_amount"] = feeAmount.String()
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, feeAmount *big.Int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -247,6 +251,10 @@ func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, 
 
 	if gasPrice != nil {
 		params["gas_price"] = gasPrice.String()
+	}
+
+	if feeAmount != nil {
+		params["fee_amount"] = feeAmount.String()
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/speedup_transaction/", params)
