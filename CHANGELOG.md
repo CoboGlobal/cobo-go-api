@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.41.0] (2023-06-01)
+[v0.41.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.40.0...v0.41.0
+### Changed
+- MPC create transaction and RBF API support param fee_amount for UTXO model. https://github.com/CoboCustody/cobo-go-api/pull/38
+
 ## [v0.40.0] (2023-04-20)
 [v0.40.0]: https://github.com/CoboCustody/cobo-go-api/compare/v0.39.0...v0.40.0
 ### Changed
