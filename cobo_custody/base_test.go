@@ -18,7 +18,10 @@ var mpcClient MPCClient
 func GetEnv(env string) Env {
 	if env == "Prod" {
 		return Prod()
+	} else if env == "Develop" {
+		return Develop()
 	}
+
 	return Sandbox()
 }
 func GetData(env string) Config {
