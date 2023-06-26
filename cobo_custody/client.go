@@ -141,7 +141,7 @@ func (c Client) GetPendingTransactions(params map[string]string) (*simplejson.Js
 }
 
 func (c Client) GetPendingTransaction(id string) (*simplejson.Json, *ApiError) {
-	return c.Request("GET", "/v1/custody/pending_transactions/", map[string]string{
+	return c.Request("GET", "/v1/custody/pending_transaction/", map[string]string{
 		"id": id,
 	})
 }
