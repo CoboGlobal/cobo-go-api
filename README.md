@@ -50,7 +50,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboCustody/cobo-go-api@v0.42.0
+go get github.com/CoboGlobal/cobo-go-api@v0.42.0
 ```
 
 
@@ -68,7 +68,7 @@ go test -env sandbox/prod -secret <yourApiSecret>
 #### Generate Key Pair
 
 ```go
-import "github.com/CoboCustody/cobo-go-api/cobo_custody"
+import "github.com/CoboGlobal/cobo-go-api/cobo_custody"
 
 apiSecret, apiKey := cobo_custody.GenerateKeyPair()
 println("API_SECRET:", apiSecret)
@@ -79,7 +79,7 @@ Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authent
 #### Initialize RestClient
 
 ```go
-import "github.com/CoboCustody/cobo-go-api/cobo_custody"
+import "github.com/CoboGlobal/cobo-go-api/cobo_custody"
 var client = cobo_custody.Client{
   Signer:  localSigner,
   Env: cobo.Sandbox(),
@@ -92,7 +92,7 @@ var client = cobo_custody.Client{
 `ApiSigner` can be instantiated through
 
 ```go
-import "github.com/CoboCustody/cobo-go-api/cobo_custody"
+import "github.com/CoboGlobal/cobo-go-api/cobo_custody"
 
 var localSigner = cobo_custody.LocalSigner{
 		PrivateKey: "apiSecret",
