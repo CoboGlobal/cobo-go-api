@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/CoboCustody/cobo-go-api/cobo_custody"
+	"github.com/CoboGlobal/cobo-go-api/cobo_custody"
 	"github.com/google/uuid"
 )
 
