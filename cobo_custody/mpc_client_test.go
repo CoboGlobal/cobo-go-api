@@ -121,3 +121,8 @@ func TestMPCClient_RetryDoubleCheck(t *testing.T) {
 	_, apiError := mpcClient.RetryDoubleCheck("123")
 	assert.NotNil(t, apiError, "api error not nil")
 }
+
+func TestMPCClient_ListTssNode(t *testing.T) {
+	_, apiError := mpcClient.ListTssNode()
+	assert.Nil(t, apiError, "api error not nil")
+}

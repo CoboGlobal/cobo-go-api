@@ -403,6 +403,11 @@ func (c MPCClient) RetryDoubleCheck(requestId string) (*simplejson.Json, *ApiErr
 	return c.Request("POST", "/v1/custody/mpc/retry_double_check/", params)
 }
 
+func (c MPCClient) ListTssNode() (*simplejson.Json, *ApiError) {
+	var params = map[string]string{}
+	return c.Request("GET", "/v1/custody/mpc/list_tss_node/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
