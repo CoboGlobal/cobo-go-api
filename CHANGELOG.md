@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.43.0] (2023-07-20)
+[v0.43.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.42.0...v0.43.0
+### Changed
+- Add API to list MPC TSS Node info. https://github.com/CoboGlobal/cobo-go-api/pull/44
+
 ## [v0.42.0] (2023-06-27)
 [v0.42.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.41.0...v0.42.0
 ### Changed
@@ -17,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [v0.40.0] (2023-04-20)
 [v0.40.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.39.0...v0.40.0
 ### Changed
-- Sign nonce support lower go version. https://github.com/CoboGlobal/cobo-go-api/pull/34
+- Sign nonce support lower Go version. https://github.com/CoboGlobal/cobo-go-api/pull/34
 
 ## [v0.39.0] (2023-04-18)
 [v0.39.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.38.0...v0.39.0

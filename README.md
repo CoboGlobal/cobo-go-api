@@ -50,7 +50,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboGlobal/cobo-go-api@v0.42.0
+go get github.com/CoboGlobal/cobo-go-api@v0.43.0
 ```
 
 
