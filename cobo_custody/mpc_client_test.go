@@ -1,6 +1,7 @@
 package cobo_custody
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -124,5 +125,17 @@ func TestMPCClient_RetryDoubleCheck(t *testing.T) {
 
 func TestMPCClient_ListTssNode(t *testing.T) {
 	_, apiError := mpcClient.ListTssNode()
+	assert.Nil(t, apiError, "api error not nil")
+}
+
+func TestMPCClient_SignMessagesByRequestIds(t *testing.T) {
+	res, apiError := mpcClient.SignMessagesByRequestIds("1690349242683,1690268795963,1690187858862")
+	fmt.Println(res)
+	assert.Nil(t, apiError, "api error not nil")
+}
+
+func TestMPCClient_SignMessagesByCobotIds(t *testing.T) {
+	res, apiError := mpcClient.SignMessagesByCobotIds("20230726132723000341052000008222,20230725150636000308867000003494,20230725135301000361318000002480")
+	fmt.Println(res)
 	assert.Nil(t, apiError, "api error not nil")
 }

@@ -408,6 +408,22 @@ func (c MPCClient) ListTssNode() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/mpc/list_tss_node/", params)
 }
 
+func (c MPCClient) SignMessagesByRequestIds(requestIds string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_ids": requestIds,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/sign_messages_by_request_ids/", params)
+}
+
+func (c MPCClient) SignMessagesByCobotIds(CoboIds string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"cobo_ids": CoboIds,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/sign_messages_by_cobo_ids/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
