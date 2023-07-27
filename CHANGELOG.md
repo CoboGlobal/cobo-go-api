@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.44.0] (2023-07-27)
+[v0.44.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.43.0...v0.44.0
+### Changed
+- Add API to get result of SignMessage. https://github.com/CoboGlobal/cobo-go-api/pull/46
+
 ## [v0.43.0] (2023-07-20)
 [v0.43.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.42.0...v0.43.0
 ### Changed
