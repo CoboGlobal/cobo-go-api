@@ -58,7 +58,7 @@ go get github.com/CoboGlobal/cobo-go-api@v0.44.0
 
 ```
 cd cobo_custody
-go test -env sandbox/prod -secret <yourApiSecret>
+go test -env develop/prod -secret <yourApiSecret>
 ```
 
 ## Usage
