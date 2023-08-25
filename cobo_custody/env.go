@@ -6,7 +6,7 @@ type Env struct {
 }
 
 func Develop() Env {
-	return Env{Host: "https://api.develop.cobo.com", CoboPub: "03596da539963fb1dd29d5859e25903eb76b9f7ed2d58516e29c9f80c201ff2c1b"}
+	return Env{Host: "https://api.dev.cobo.com", CoboPub: "03596da539963fb1dd29d5859e25903eb76b9f7ed2d58516e29c9f80c201ff2c1b"}
 }
 
 func Prod() Env {
