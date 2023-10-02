@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/bitly/go-simplejson v0.5.0
-	github.com/btcsuite/btcd v0.0.0-20190824003749-130ea5bddde3
 	github.com/stretchr/testify v1.8.1
 )
 
