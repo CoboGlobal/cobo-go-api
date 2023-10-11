@@ -142,7 +142,7 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 
 func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fromAddr, toAddr, toAddressDetails string,
 	fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, operation int, extraParameters string, maxFee *big.Int,
-	maxPriorityFee *big.Int, feeAmount *big.Int) (*simplejson.Json, *ApiError) {
+	maxPriorityFee *big.Int, feeAmount *big.Int, remark string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -194,6 +194,10 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fr
 
 	if feeAmount != nil {
 		params["fee_amount"] = feeAmount.String()
+	}
+
+	if remark != "" {
+		params["remark"] = remark
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
