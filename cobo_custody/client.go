@@ -172,6 +172,10 @@ func (c Client) Withdraw(coin string, requestId string, address string, amount *
 	if options["force_internal"] != "" {
 		params["force_internal"] = options["force_internal"]
 	}
+
+	if options["remark"] != "" {
+		params["remark"] = options["remark"]
+	}
 	return c.Request("POST", "/v1/custody/new_withdraw_request/", params)
 }
 
