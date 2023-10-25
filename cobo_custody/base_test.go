@@ -8,7 +8,7 @@ import (
 var env = flag.String("env", "Sandbox", "Env Config")
 var secret = flag.String("secret", "Demo", "Api Secrect")
 var web3Secret = flag.String("web3Secret", "Web3Demo", "Web3 Api Secrect")
-var mpcSecret = flag.String("mpcSecret", "MPCDemo", "MPC Api Secrect")
+var mpcSecret = flag.String("mpcSecret", "510b3a777ae15ed922136c2aad985789145dea17d906210f66f4bd781a3cfb44", "MPC Api Secrect")
 
 var ConfigData Config
 var client Client

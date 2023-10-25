@@ -2,6 +2,7 @@ package cobo_custody
 
 import (
 	"fmt"
+	"math/big"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -46,6 +47,15 @@ func TestMPCClient_GenerateAddressess(t *testing.T) {
 	assert.Nil(t, apiError, "api error not nil")
 }
 
+func TestMPCClient_UpdateAddressDescription(t *testing.T) {
+	coin := "ETH"
+	address := "0xb2ad1bdf4a1d766e8faeb94689547d3fede5792c"
+	description := "test1"
+
+	_, apiError := mpcClient.UpdateAddressDescription(coin, address, description)
+	assert.Nil(t, apiError, "api error not nil")
+}
+
 func TestMPCClient_ListAddress(t *testing.T) {
 	chainCode := "ETH"
 
@@ -70,12 +80,13 @@ func TestMPCClient_ListSpendable(t *testing.T) {
 	assert.Nil(t, apiError, "api error not nil")
 }
 
-//func TestMPCClient_CreateTransaction(t *testing.T) {
-//	_, apiError := mpcClient.CreateTransaction("VTHO", "test_001", 1,
-//		"0xe434c89a6dacc9ceb7e3e94b5f966fa445127ab7", "0x99ea76426bf86f0fe046355606f495b79dd6e180",
-//		"", 0, 0, 0, 0, "")
-//	assert.Nil(t, apiError, "api error not nil")
-//}
+func TestMPCClient_CreateTransaction(t *testing.T) {
+	_, apiError := mpcClient.CreateTransaction("ETH", "test_001", big.NewInt(9),
+		"0xe434c89a6dacc9ceb7e3e94b5f966fa445127ab7", "0x99ea76426bf86f0fe046355606f495b79dd6e180", "",
+		nil, big.NewInt(0), big.NewInt(0), 100, "", big.NewInt(0), big.NewInt(0), nil)
+	assert.Nil(t, apiError, "api error not nil")
+}
+
 //
 //func TestMPCClient_DropTransaction(t *testing.T) {
 //	_, apiError := mpcClient.DropTransaction("20221213164754000373267000009730", "test_001", 1, 0, 0)
