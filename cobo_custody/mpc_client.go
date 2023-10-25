@@ -75,6 +75,16 @@ func (c MPCClient) GenerateAddresses(chainCode string, count int) (*simplejson.J
 	return c.Request("POST", "/v1/custody/mpc/generate_addresses/", params)
 }
 
+func (c MPCClient) UpdateAddressDescription(coin string, address string, description string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin":        coin,
+		"address":     address,
+		"description": description,
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/update_address_description/", params)
+}
+
 func (c MPCClient) ListAddresses(chainCode, startId, endId string, limit, sortFlag int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
