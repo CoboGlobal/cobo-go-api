@@ -41,7 +41,7 @@ type Config struct {
 	Withdraw    map[string]string
 }
 
-func SandboxConfig() Config {
+func DevConfig() Config {
 	return Config{
 		CoboId:     "20220314181458000331767000003732",
 		TxId:       "0x1c4d137bc2a2ee8f22cbdf9e90405974e72e65d922f42eb81d9f7a05d0f64fc6",
