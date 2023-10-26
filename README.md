@@ -82,7 +82,7 @@ Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authent
 import "github.com/CoboGlobal/cobo-go-api/cobo_custody"
 var client = cobo_custody.Client{
   Signer:  localSigner,
-  Env: cobo.Sandbox(),
+  Env: cobo.Dev(),
 }
 ```
 
