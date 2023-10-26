@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var env = flag.String("env", "Dev", "Env Config")
+var env = flag.String("env", "Develop", "Env Config")
 var secret = flag.String("secret", "Demo", "Api Secrect")
 var web3Secret = flag.String("web3Secret", "Web3Demo", "Web3 Api Secrect")
 var mpcSecret = flag.String("mpcSecret", "MPCDemo", "MPC Api Secrect")
