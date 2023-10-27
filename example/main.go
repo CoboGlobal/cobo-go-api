@@ -13,7 +13,7 @@ var localSigner = cobo_custody.LocalSigner{
 
 var mpcClient = cobo_custody.MPCClient{
 	Signer: localSigner,
-	Env:    cobo_custody.Sandbox(), // use cobo_custody.Prod() in Prod
+	Env:    cobo_custody.Dev(), // use cobo_custody.Prod() in Prod
 }
 
 func main() {

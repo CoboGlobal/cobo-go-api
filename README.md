@@ -50,7 +50,7 @@ cobo-go-api is a lightweight golang library for interacting with the [Cobo Custo
 
 add dependency 
 ```
-go get github.com/CoboGlobal/cobo-go-api@v0.44.0
+go get github.com/CoboGlobal/cobo-go-api@v0.45.0
 ```
 
 
@@ -82,7 +82,7 @@ Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authent
 import "github.com/CoboGlobal/cobo-go-api/cobo_custody"
 var client = cobo_custody.Client{
   Signer:  localSigner,
-  Env: cobo.Sandbox(),
+  Env: cobo.Dev(),
 }
 ```
 

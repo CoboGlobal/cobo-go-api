@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var env = flag.String("env", "Sandbox", "Env Config")
+var env = flag.String("env", "Develop", "Env Config")
 var secret = flag.String("secret", "Demo", "Api Secrect")
 var web3Secret = flag.String("web3Secret", "Web3Demo", "Web3 Api Secrect")
 var mpcSecret = flag.String("mpcSecret", "510b3a777ae15ed922136c2aad985789145dea17d906210f66f4bd781a3cfb44", "MPC Api Secrect")
@@ -19,16 +19,16 @@ func GetEnv(env string) Env {
 	if env == "Prod" {
 		return Prod()
 	} else if env == "Develop" {
-		return Develop()
+		return Dev()
 	}
 
-	return Sandbox()
+	return Dev()
 }
 func GetData(env string) Config {
 	if env == "Prod" {
 		return ProdConfig()
 	}
-	return SandboxConfig()
+	return DevConfig()
 }
 
 func TestMain(m *testing.M) {
