@@ -136,6 +136,10 @@ func (c Client) GetTransactionsByTime(params map[string]string) (*simplejson.Jso
 	return c.Request("GET", "/v1/custody/transactions_by_time/", params)
 }
 
+func (c Client) GetTransactionsByTimeEx(params map[string]string) (*simplejson.Json, *ApiError) {
+	return c.Request("GET", "/v1/custody/transactions_by_time_ex/", params)
+}
+
 func (c Client) GetPendingTransactions(params map[string]string) (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/pending_transactions/", params)
 }
