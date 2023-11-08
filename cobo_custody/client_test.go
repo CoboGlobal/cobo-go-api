@@ -242,6 +242,16 @@ func TestClient_GetTransactionsByTime(t *testing.T) {
 	fmt.Println(string(str))
 }
 
+func TestClient_GetTransactionsByTimeEx(t *testing.T) {
+	result, apiError := client.GetTransactionsByTimeEx(map[string]string{})
+	if apiError != nil {
+		t.Fail()
+	}
+	str, _ := result.Encode()
+	fmt.Println("TestClient_GetTransactionsByTimeEx")
+	fmt.Println(string(str))
+}
+
 func TestClient_GetPendingTransactions(t *testing.T) {
 	result, apiError := client.GetPendingTransactions(map[string]string{})
 	if apiError != nil {
