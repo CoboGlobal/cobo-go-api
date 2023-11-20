@@ -52,7 +52,7 @@ func (c MPCPrimeBrokerClient) BindAddresses(userId string, addresses string) (*s
 	return c.Request("POST", "/v1/custody/auth/bind_addresses/", params)
 }
 
-func (c MPCPrimeBrokerClient) ChangeAddresses(userId string) (*simplejson.Json, *ApiError) {
+func (c MPCPrimeBrokerClient) ChangeBinding(userId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"user_id": userId,
 	}

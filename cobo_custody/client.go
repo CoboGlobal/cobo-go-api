@@ -32,7 +32,7 @@ func (c Client) GetCoinInfo(coin string) (*simplejson.Json, *ApiError) {
 	})
 }
 
-func (c Client) GetSupportedCoins(coin string) (*simplejson.Json, *ApiError) {
+func (c Client) GetSupportedCoins() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/get_supported_coins/", map[string]string{})
 }
 
