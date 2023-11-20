@@ -24,7 +24,7 @@ func (c MPCPrimeBrokerClient) CreateBinding(userId string) (*simplejson.Json, *A
 		"user_id": userId,
 	}
 
-	return c.Request("POST", "/v1/custody/auth/create_binding/", params)
+	return c.Request("POST", "/v1/custody/guards/create_binding/", params)
 }
 
 func (c MPCPrimeBrokerClient) QueryBinding(binderId string) (*simplejson.Json, *ApiError) {
@@ -32,7 +32,7 @@ func (c MPCPrimeBrokerClient) QueryBinding(binderId string) (*simplejson.Json, *
 		"binder_id": binderId,
 	}
 
-	return c.Request("GET", "/v1/custody/auth/query_binding/", params)
+	return c.Request("GET", "/v1/custody/guards/query_binding/", params)
 }
 
 func (c MPCPrimeBrokerClient) QueryUserAuth(userId string) (*simplejson.Json, *ApiError) {
@@ -40,7 +40,7 @@ func (c MPCPrimeBrokerClient) QueryUserAuth(userId string) (*simplejson.Json, *A
 		"user_id": userId,
 	}
 
-	return c.Request("GET", "/v1/custody/auth/query_user_auth/", params)
+	return c.Request("GET", "/v1/custody/guards/query_user_auth/", params)
 }
 
 func (c MPCPrimeBrokerClient) BindAddresses(userId string, addresses string) (*simplejson.Json, *ApiError) {
@@ -49,7 +49,7 @@ func (c MPCPrimeBrokerClient) BindAddresses(userId string, addresses string) (*s
 		"addresses": addresses,
 	}
 
-	return c.Request("POST", "/v1/custody/auth/bind_addresses/", params)
+	return c.Request("POST", "/v1/custody/guards/bind_addresses/", params)
 }
 
 func (c MPCPrimeBrokerClient) ChangeBinding(userId string) (*simplejson.Json, *ApiError) {
@@ -57,7 +57,7 @@ func (c MPCPrimeBrokerClient) ChangeBinding(userId string) (*simplejson.Json, *A
 		"user_id": userId,
 	}
 
-	return c.Request("POST", "/v1/custody/auth/change_binding/", params)
+	return c.Request("POST", "/v1/custody/guards/change_binding/", params)
 }
 
 func (c MPCPrimeBrokerClient) UnbindBinding(userId string) (*simplejson.Json, *ApiError) {
@@ -65,7 +65,7 @@ func (c MPCPrimeBrokerClient) UnbindBinding(userId string) (*simplejson.Json, *A
 		"user_id": userId,
 	}
 
-	return c.Request("POST", "/v1/custody/auth/unbind_binding/", params)
+	return c.Request("POST", "/v1/custody/guards/unbind_binding/", params)
 }
 
 func (c MPCPrimeBrokerClient) QueryStatement(statementId string) (*simplejson.Json, *ApiError) {
@@ -73,7 +73,7 @@ func (c MPCPrimeBrokerClient) QueryStatement(statementId string) (*simplejson.Js
 		"statement_id": statementId,
 	}
 
-	return c.Request("GET", "/v1/custody/auth/query_statement/", params)
+	return c.Request("GET", "/v1/custody/guards/query_statement/", params)
 }
 
 func (c MPCPrimeBrokerClient) request(method string, path string, params map[string]string) (string, error) {
