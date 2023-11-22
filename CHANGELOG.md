@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.47.0] (2023-11-22)
+[v0.47.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.46.0...v0.47.0
+### Added
+- Add API for Primer Broker to facilitate MPC wallet integration with Cobo Guard. https://github.com/CoboGlobal/cobo-go-api/pull/56
+
 ## [v0.46.0] (2023-11-08)
 [v0.46.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.45.0...v0.46.0
 ### Added
-- Add New API: Add transactions_by_time_ex API for Custody Wallet.https://github.com/CoboGlobal/cobo-go-api/pull/54
+- Add New API: Add transactions_by_time_ex API for Custody Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/54
 
 ## [v0.45.0] (2023-10-26)
 [v0.45.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.44.0...v0.45.0
