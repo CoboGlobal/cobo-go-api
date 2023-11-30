@@ -14,7 +14,7 @@ To access the API documentation, navigate to
 the [API references](https://www.cobo.com/developers/api-references/overview/).
 
 For more information on Cobo's Go SDK, refer to
-the [Go SDK Guide](https://www.cobo.com/developers/get-started/sdks/waas/go).
+the [Go SDK Guide](https://www.cobo.com/developers/sdks-and-tools/sdks/waas/go).
 
 ## Usage
 
