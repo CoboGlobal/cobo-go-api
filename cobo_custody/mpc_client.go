@@ -438,6 +438,20 @@ func (c MPCClient) SignMessagesByCobotIds(CoboIds string) (*simplejson.Json, *Ap
 	return c.Request("GET", "/v1/custody/mpc/sign_messages_by_cobo_ids/", params)
 }
 
+func (c MPCClient) GetMaxSendAmount(coin string, feeRate big.Float, toAddress string, fromAddress string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin":       coin,
+		"fee_rate":   feeRate.String(),
+		"to_address": toAddress,
+	}
+
+	if fromAddress != "" {
+		params["from_address"] = fromAddress
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/get_max_send_amount/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
