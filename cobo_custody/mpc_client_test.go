@@ -150,3 +150,9 @@ func TestMPCClient_SignMessagesByCobotIds(t *testing.T) {
 	fmt.Println(res)
 	assert.Nil(t, apiError, "api error not nil")
 }
+
+func TestMPCClient_GetMaxSendAmount(t *testing.T) {
+	res, apiError := mpcClient.GetMaxSendAmount("GETH", *big.NewFloat(0.0), "", "")
+	fmt.Println(res)
+	assert.Nil(t, apiError, "api error not nil")
+}
