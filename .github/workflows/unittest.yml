@@ -35,4 +35,4 @@ jobs:
         MPCSECRET: "${{ secrets.DEVELOPMPCSECRET }}"
       run: |
         cd cobo_custody 
-        go test -env $ENV -secret $SECRET -web3Secret $Web3SECRET -mpcSecret $MPCSECRET
+        go test -env $ENV -secret $SECRET -mpcSecret $MPCSECRET

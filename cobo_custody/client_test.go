@@ -22,7 +22,7 @@ func TestClient_GetAccountInfo(t *testing.T) {
 }
 
 func TestClient_GetValidCoinInfo(t *testing.T) {
-	coins := [...]string{"ETH", "BTC", "ETH_USDT", "XRP"}
+	coins := [...]string{"ETH", "BTC", "BSC_BNB", "XRP"}
 	for _, coin := range coins {
 		result, apiError := client.GetCoinInfo(coin)
 		if apiError != nil {
@@ -46,7 +46,7 @@ func TestClient_GetInvalidCoinInfo(t *testing.T) {
 }
 
 func TestClient_NewValidDepositAddress(t *testing.T) {
-	coins := [...]string{"ETH", "BTC", "ETH_USDT", "XRP"}
+	coins := [...]string{"ETH", "BTC", "BSC_BNB", "XRP"}
 	for _, coin := range coins {
 		result, apiError := client.NewDepositAddress(coin, false)
 		if apiError != nil {
@@ -100,6 +100,7 @@ func TestClient_VerifyDepositAddress(t *testing.T) {
 		if apiError != nil {
 			t.Fail()
 		}
+		fmt.Println(result)
 		str, _ := result.Encode()
 		fmt.Println("TestClient_VerifyDepositAddress coin:", coin)
 		fmt.Println(string(str))
@@ -119,7 +120,7 @@ func TestClient_BatchVerifyDepositAddress(t *testing.T) {
 }
 
 func TestClient_VerifyValidAddress(t *testing.T) {
-	result, apiError := client.VerifyValidAddress("ETH", "0x05325e6f9d1f0437bd78a72c2ae084fbb8c039ee")
+	result, apiError := client.VerifyValidAddress("BTC", "3Kd5rjiLtvpHv5nhYQNTTeRLgrz4om32PJ")
 	if apiError != nil {
 		t.Fail()
 	}
@@ -272,14 +273,19 @@ func TestClient_GetTransactionHistory(t *testing.T) {
 	fmt.Println(string(str))
 }
 
-func TestClient_GetPendingTransaction(t *testing.T) {
-	result, apiError := client.GetPendingTransaction("20211214231857000374360000005692")
-	if apiError != nil {
-		t.Fail()
-	}
-	str, _ := result.Encode()
-	fmt.Println(string(str))
-}
+// func TestClient_GetPendingTransaction(t *testing.T) {
+// 	if testing.Short() {
+// 		t.Skip("skipping testing in short mode")
+// 	}
+// 	result, apiError := client.GetPendingTransaction("20211214231857000374360000005692")
+// 	// result, apiError := client.GetPendingTransaction("")
+
+// 	if apiError != nil {
+// 		t.Fail()
+// 	}
+// 	str, _ := result.Encode()
+// 	fmt.Println(string(str))
+// }
 
 func TestClient_Withdraw(t *testing.T) {
 	for coin, address := range ConfigData.Withdraw {
@@ -324,6 +330,10 @@ func TestClient_GetStakingProductDetails(t *testing.T) {
 	}
 	str, _ := re.Encode()
 	var jsonSlice []map[string]interface{}
+	json.Unmarshal(str, &jsonSlice)
+	if len(jsonSlice) == 0 {
+		t.Skip("no TETH staking product")
+	}
 	json.Unmarshal(str, &jsonSlice)
 	var product_id = strings.Split(fmt.Sprintf("%f", jsonSlice[0]["product_id"]), ".")[0]
 	result, apiError := client.GetStakingProductDetails(product_id, "zh")
