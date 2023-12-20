@@ -16,6 +16,7 @@ func TestClient_GetAccountInfo(t *testing.T) {
 	if apiError != nil {
 		t.Fail()
 	}
+	fmt.Printf("%v", apiError)
 	str, _ := result.Encode()
 	fmt.Println("TestClient_GetAccountInfo")
 	fmt.Println(string(str))
