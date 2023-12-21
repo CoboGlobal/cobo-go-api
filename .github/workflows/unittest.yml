@@ -30,7 +30,7 @@ jobs:
     - name: run testcase
       env:
         ENV: "${{ github.event.inputs.environment == 'prod' && 'prod' || 'develop' }}"
-        SECRET: "${{ github.event.inputs.environment == 'prod' && 'true' || secrets.DEVELOPSECRET }}"
+        SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.DEVELOPSECRET }}"
         Web3SECRET: "${{ secrets.DEVELOPWEB3SECRET }}"
         MPCSECRET: "${{ secrets.DEVELOPMPCSECRET }}"
       run: |
