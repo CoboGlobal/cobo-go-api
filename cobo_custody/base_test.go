@@ -8,7 +8,7 @@ import (
 var env = flag.String("env", "Develop", "Env Config")
 var secret = flag.String("secret", "Demo", "Api Secrect")
 var web3Secret = flag.String("web3Secret", "Web3Demo", "Web3 Api Secrect")
-var mpcSecret = flag.String("mpcSecret", "510b3a777ae15ed922136c2aad985789145dea17d906210f66f4bd781a3cfb44", "MPC Api Secrect")
+var mpcSecret = flag.String("mpcSecret", "MPCDemo", "MPC Api Secrect")
 
 var ConfigData Config
 var client Client
@@ -33,6 +33,9 @@ func GetData(env string) Config {
 
 func TestMain(m *testing.M) {
 	flag.Parse()
+    if ((secret == nil || mpcSecret == nil) || (*secret == "Demo" || *mpcSecret == "MPCDemo")) {
+        panic("secret or mpcSecret should not be empty")
+    }
 	var localSigner = LocalSigner{
 		PrivateKey: *secret,
 	}
