@@ -30,9 +30,10 @@ jobs:
     - name: run testcase
       env:
         ENV: "${{ github.event.inputs.environment == 'prod' && 'prod' || 'develop' }}"
-        SECRET: "${{ github.event.inputs.environment == 'prod' && secrets.PRODSECRET || secrets.DEVELOPSECRET }}"
+        SECRET: "${{ secrets.DEVELOPSECRET }}"
         Web3SECRET: "${{ secrets.DEVELOPWEB3SECRET }}"
-        MPCSECRET: "${{ secrets.DEVELOPMPCSECRET }}"
+        MPCSECRET: ${{ secrets.DEVELOPMPCSECRET }}
       run: |
         cd cobo_custody 
-        go test -env $ENV -secret $SECRET -mpcSecret $MPCSECRET
+        echo "receive DS[$]"
+        go test -env $ENV -secret "$SECRET" -mpcSecret "$MPCSECRET"
