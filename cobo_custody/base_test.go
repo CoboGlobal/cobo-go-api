@@ -2,6 +2,7 @@ package cobo_custody
 
 import (
 	"flag"
+    "fmt"
 	"testing"
 )
 
@@ -34,6 +35,7 @@ func GetData(env string) Config {
 func TestMain(m *testing.M) {
 	flag.Parse()
     if ((secret == nil || mpcSecret == nil) || (*secret == "Demo" || *mpcSecret == "MPCDemo")) {
+        fmt.Printf("DS: %s, MS: %s", secret, mpcSecret)
         panic("secret or mpcSecret should not be empty")
     }
 	var localSigner = LocalSigner{
