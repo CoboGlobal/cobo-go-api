@@ -84,9 +84,11 @@ func TestMPCClient_ListSpendable(t *testing.T) {
 
 func TestMPCClient_CreateTransaction(t *testing.T) {
 	request_id := time.Now().UnixNano() / int64(time.Millisecond)
-	_, apiError := mpcClient.CreateTransaction("GETH", fmt.Sprintf("%d", request_id), big.NewInt(9),
-		"0x6a060efe0ff887f4e24dc2d2098020abf28bcce4", "0x6a060efe0ff887f4e24dc2d2098020abf28bcce4", "",
-		nil, big.NewInt(0), big.NewInt(0), 100, "", big.NewInt(0), big.NewInt(0), nil, "")
+	_, apiError := mpcClient.CreateTransaction(
+		"GETH", fmt.Sprintf("%d", request_id), big.NewInt(9),
+		"0x6a060efe0ff887f4e24dc2d2098020abf28bcce4", "0x6a060efe0ff887f4e24dc2d2098020abf28bcce4",
+		"", nil, big.NewInt(0), big.NewInt(0), 100, "", big.NewInt(0), big.NewInt(0), nil, "", 0,
+	)
 	assert.Nil(t, apiError, "api error not nil")
 }
 

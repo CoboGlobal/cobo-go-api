@@ -25,7 +25,7 @@ func TestClient_GetAccountInfo(t *testing.T) {
 func TestClient_GetValidCoinInfo(t *testing.T) {
 	coins := [...]string{"ETH", "BTC", "BSC_BNB", "XRP"}
 	for _, coin := range coins {
-		result, apiError := client.GetCoinInfo(coin)
+		result, apiError := client.GetCoinInfo(coin, nil)
 		if apiError != nil {
 			t.Fail()
 		}
@@ -38,7 +38,7 @@ func TestClient_GetValidCoinInfo(t *testing.T) {
 func TestClient_GetInvalidCoinInfo(t *testing.T) {
 	coins := [...]string{"BTTB"}
 	for _, coin := range coins {
-		_, apiError := client.GetCoinInfo(coin)
+		_, apiError := client.GetCoinInfo(coin, nil)
 		if apiError.ErrorCode != 12002 {
 			t.Fail()
 		}
