@@ -26,10 +26,16 @@ func (c Client) GetAccountInfo() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/org_info/", map[string]string{})
 }
 
-func (c Client) GetCoinInfo(coin string) (*simplejson.Json, *ApiError) {
-	return c.Request("GET", "/v1/custody/coin_info/", map[string]string{
+func (c Client) GetCoinInfo(coin string, amount *big.Int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
 		"coin": coin,
-	})
+	}
+
+	if amount != nil {
+		params["amount"] = amount.String()
+	}
+
+	return c.Request("GET", "/v1/custody/coin_info/", params)
 }
 
 func (c Client) GetSupportedCoins() (*simplejson.Json, *ApiError) {
@@ -253,6 +259,10 @@ func (c Client) GetUnstakings(coin string) (*simplejson.Json, *ApiError) {
 
 func (c Client) GetStakingHistory() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/staking_history/", map[string]string{})
+}
+
+func (c Client) GetGasStationBalance() (*simplejson.Json, *ApiError) {
+	return c.Request("GET", "/v1/custody/get_gas_station_balance/", map[string]string{})
 }
 
 func (c Client) request(method string, path string, params map[string]string) (string, error) {
