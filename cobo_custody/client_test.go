@@ -422,3 +422,13 @@ func TestClient_GetStakingHistory(t *testing.T) {
 	fmt.Println("TestClient_GetStakingHistory")
 	fmt.Println(string(str))
 }
+
+func TestClient_GetGasStationBalance(t *testing.T) {
+	result, apiError := client.GetGasStationBalance()
+	if apiError != nil {
+		t.Fail()
+	}
+	str, _ := result.Encode()
+	fmt.Println("TestClient_GetGasStationBalance")
+	fmt.Println(string(str))
+}

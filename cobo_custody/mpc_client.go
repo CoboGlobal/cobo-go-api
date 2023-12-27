@@ -152,7 +152,7 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 
 func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fromAddr, toAddr, toAddressDetails string,
 	fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, operation int, extraParameters string, maxFee *big.Int,
-	maxPriorityFee *big.Int, feeAmount *big.Int, remark string) (*simplejson.Json, *ApiError) {
+	maxPriorityFee *big.Int, feeAmount *big.Int, remark string, autoFuel int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -210,6 +210,10 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fr
 		params["remark"] = remark
 	}
 
+	if autoFuel >= 0 {
+		params["auto_fuel"] = strconv.Itoa(autoFuel)
+	}
+
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
 }
 
@@ -225,7 +229,8 @@ func (c MPCClient) SignMessage(chainCode, requestId, fromAddr string, signVersio
 	return c.Request("POST", "/v1/custody/mpc/sign_message/", params)
 }
 
-func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, feeAmount *big.Int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int,
+	gasLimit *big.Int, feeAmount *big.Int, autoFuel int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -245,12 +250,17 @@ func (c MPCClient) DropTransaction(coboId, requestId string, fee *big.Float, gas
 
 	if feeAmount != nil {
 		params["fee_amount"] = feeAmount.String()
+	}
+
+	if autoFuel >= 0 {
+		params["auto_fuel"] = strconv.Itoa(autoFuel)
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/drop_transaction/", params)
 }
 
-func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, feeAmount *big.Int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, gasPrice *big.Int,
+	gasLimit *big.Int, feeAmount *big.Int, autoFuel int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"cobo_id":    coboId,
 		"request_id": requestId,
@@ -270,6 +280,10 @@ func (c MPCClient) SpeedupTransaction(coboId, requestId string, fee *big.Float, 
 
 	if feeAmount != nil {
 		params["fee_amount"] = feeAmount.String()
+	}
+
+	if autoFuel >= 0 {
+		params["auto_fuel"] = strconv.Itoa(autoFuel)
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/speedup_transaction/", params)

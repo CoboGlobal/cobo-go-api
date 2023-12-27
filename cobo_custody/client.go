@@ -261,6 +261,10 @@ func (c Client) GetStakingHistory() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/staking_history/", map[string]string{})
 }
 
+func (c Client) GetGasStationBalance() (*simplejson.Json, *ApiError) {
+	return c.Request("GET", "/v1/custody/get_gas_station_balance/", map[string]string{})
+}
+
 func (c Client) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
