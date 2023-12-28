@@ -480,31 +480,31 @@ func (c MPCClient) GetMaxSendAmount(coin string, feeRate big.Float, toAddress st
 	return c.Request("GET", "/v1/custody/mpc/get_max_send_amount/", params)
 }
 
-func (c MPCClient) LockSpendable(coin string, txHash string, voutN string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) LockSpendable(coin string, txHash string, voutN int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"tx_hash": txHash,
-		"vout_n":  voutN,
+		"vout_n":  strconv.Itoa(voutN),
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/lock_spendable/", params)
 }
 
-func (c MPCClient) UnlockSpendable(coin string, txHash string, voutN string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) UnlockSpendable(coin string, txHash string, voutN int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"tx_hash": txHash,
-		"vout_n":  voutN,
+		"vout_n":  strconv.Itoa(voutN),
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/unlock_spendable/", params)
 }
 
-func (c MPCClient) GetRareSatoshis(coin string, txHash string, voutN string) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GetRareSatoshis(coin string, txHash string, voutN int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
 		"tx_hash": txHash,
-		"vout_n":  voutN,
+		"vout_n":  strconv.Itoa(voutN),
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/get_rare_satoshis/", params)
