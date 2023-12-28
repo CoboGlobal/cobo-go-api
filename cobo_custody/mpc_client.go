@@ -75,6 +75,16 @@ func (c MPCClient) GenerateAddresses(chainCode string, count int) (*simplejson.J
 	return c.Request("POST", "/v1/custody/mpc/generate_addresses/", params)
 }
 
+func (c MPCClient) GenerateAddressMemo(chainCode string, address string, count int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"chain_code": chainCode,
+		"address":    address,
+		"count":      strconv.Itoa(count),
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/generate_address_memo/", params)
+}
+
 func (c MPCClient) UpdateAddressDescription(coin string, address string, description string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":        coin,
@@ -152,7 +162,7 @@ func (c MPCClient) ListSpendable(address, coin string) (*simplejson.Json, *ApiEr
 
 func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fromAddr, toAddr, toAddressDetails string,
 	fee *big.Float, gasPrice *big.Int, gasLimit *big.Int, operation int, extraParameters string, maxFee *big.Int,
-	maxPriorityFee *big.Int, feeAmount *big.Int, remark string, autoFuel int) (*simplejson.Json, *ApiError) {
+	maxPriorityFee *big.Int, feeAmount *big.Int, remark string, autoFuel int, memo string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":       coin,
 		"request_id": requestId,
@@ -212,6 +222,10 @@ func (c MPCClient) CreateTransaction(coin, requestId string, amount *big.Int, fr
 
 	if autoFuel >= 0 {
 		params["auto_fuel"] = strconv.Itoa(autoFuel)
+	}
+
+	if memo != "" {
+		params["memo"] = memo
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/create_transaction/", params)
