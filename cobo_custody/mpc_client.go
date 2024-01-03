@@ -49,6 +49,14 @@ func (c MPCClient) GetWalletSupportedCoins() (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/mpc/get_wallet_supported_coins/", params)
 }
 
+func (c MPCClient) GetCoinInfo(coin string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin": coin,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/coin_info/", params)
+}
+
 func (c MPCClient) IsValidAddress(coin string, address string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"coin":    coin,
