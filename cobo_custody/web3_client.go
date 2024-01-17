@@ -12,7 +12,8 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
 type Web3Client struct {
@@ -262,10 +263,10 @@ func (c Web3Client) Request(method string, path string, params map[string]string
 
 func (c Web3Client) VerifyEcc(message string, signature string) bool {
 	pubKeyBytes, _ := hex.DecodeString(c.Env.CoboPub)
-	pubKey, _ := btcec.ParsePubKey(pubKeyBytes, btcec.S256())
+	pubKey, _ := btcec.ParsePubKey(pubKeyBytes)
 
 	sigBytes, _ := hex.DecodeString(signature)
-	sigObj, _ := btcec.ParseSignature(sigBytes, btcec.S256())
+	sigObj, _ := ecdsa.ParseSignature(sigBytes)
 
 	verified := sigObj.Verify([]byte(Hash256x2(message)), pubKey)
 	return verified

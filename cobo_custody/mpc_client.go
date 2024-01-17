@@ -12,7 +12,8 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
 type MPCClient struct {
@@ -602,7 +603,7 @@ func (c MPCClient) VerifyEcc(message string, signature string) bool {
 		return false
 	}
 
-	pubKey, err := btcec.ParsePubKey(pubKeyBytes, btcec.S256())
+	pubKey, err := btcec.ParsePubKey(pubKeyBytes)
 	if err != nil {
 		fmt.Println("parse pubkey error ", err)
 		return false
@@ -614,7 +615,7 @@ func (c MPCClient) VerifyEcc(message string, signature string) bool {
 		return false
 	}
 
-	sigObj, err := btcec.ParseSignature(sigBytes, btcec.S256())
+	sigObj, err := ecdsa.ParseSignature(sigBytes)
 	if err != nil {
 		fmt.Println("parse signature error ", err)
 		return false
