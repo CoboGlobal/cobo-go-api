@@ -5,7 +5,9 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"github.com/btcsuite/btcd/btcec"
+
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
 type LocalSigner struct {
@@ -24,14 +26,14 @@ func Hash256x2(s string) string {
 
 func (signer LocalSigner) Sign(message string) string {
 	apiSecret, _ := hex.DecodeString(signer.PrivateKey)
-	key, _ := btcec.PrivKeyFromBytes(btcec.S256(), apiSecret)
-	sig, _ := key.Sign([]byte(Hash256x2(message)))
+	key, _ := btcec.PrivKeyFromBytes(apiSecret)
+	sig := ecdsa.Sign(key, []byte(Hash256x2(message)))
 	return fmt.Sprintf("%x", sig.Serialize())
 }
 
 func (signer LocalSigner) GetPublicKey() string {
 	apiSecret, _ := hex.DecodeString(signer.PrivateKey)
-	key, _ := btcec.PrivKeyFromBytes(btcec.S256(), apiSecret)
+	key, _ := btcec.PrivKeyFromBytes(apiSecret)
 	return fmt.Sprintf("%x", key.PubKey().SerializeCompressed())
 }
 
@@ -40,7 +42,7 @@ func GenerateKeyPair() (string, string) {
 	if _, err := rand.Read(apiSecret); err != nil {
 		panic(err)
 	}
-	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), apiSecret)
+	privKey, _ := btcec.PrivKeyFromBytes(apiSecret)
 	apiKey := fmt.Sprintf("%x", privKey.PubKey().SerializeCompressed())
 	apiSecretStr := fmt.Sprintf("%x", apiSecret)
 	return apiSecretStr, apiKey
