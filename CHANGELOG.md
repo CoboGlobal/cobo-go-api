@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.54.0] (2024-02-28)
+[v0.54.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.53.0...v0.54.0
+### Changed
+- Add New Params: Add new parameter 'extra_parameters' for API mpc_speedup_transaction and mpc_drop_transaction. https://github.com/CoboGlobal/cobo-go-api/pull/76
+
 ## [v0.53.0] (2024-01-17)
 [v0.53.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.52.0...v0.53.0
 ### Changed
