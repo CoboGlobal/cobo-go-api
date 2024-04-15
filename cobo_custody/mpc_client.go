@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
@@ -525,6 +524,24 @@ func (c MPCClient) GetRareSatoshis(coin string, txHash string, voutN int) (*simp
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/get_rare_satoshis/", params)
+}
+
+func (c MPCClient) GetUTXOAssets(coin string, txHash string, voutN int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin":    coin,
+		"tx_hash": txHash,
+		"vout_n":  strconv.Itoa(voutN),
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/get_utxo_assets/", params)
+}
+
+func (c MPCClient) GetOrdinalsInscription(inscriptionId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"inscription_id": inscriptionId,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/get_ordinals_inscription/", params)
 }
 
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
