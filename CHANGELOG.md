@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.55.0] (2024-04-15)
+[v0.55.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.54.0...v0.55.0
+### Changed
+- Add New API: Add get_utxo_assets and get_ordinals_inscription API for MPC Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/79
+
 ## [v0.54.0] (2024-02-28)
 [v0.54.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.53.0...v0.54.0
 ### Changed
