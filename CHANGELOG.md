@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.56.0] (2024-04-19)
+[v0.56.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.55.0...v0.56.0
+### Changed
+- Bug fix. https://github.com/CoboGlobal/cobo-go-api/pull/81
+
 ## [v0.55.0] (2024-04-15)
 [v0.55.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.54.0...v0.55.0
 ### Changed
