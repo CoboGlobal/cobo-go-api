@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
