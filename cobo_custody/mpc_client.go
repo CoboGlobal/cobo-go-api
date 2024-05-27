@@ -545,6 +545,57 @@ func (c MPCClient) GetOrdinalsInscription(inscriptionId string) (*simplejson.Jso
 	return c.Request("GET", "/v1/custody/mpc/get_ordinals_inscription/", params)
 }
 
+func (c MPCClient) BabylonPrepareStaking(requestId string, stakeInfo string, feeRate big.Float, maxStakingFee *big.Int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+		"stake_info": stakeInfo,
+		"fee_rate":   feeRate.String(),
+	}
+	if maxStakingFee != nil {
+		params["max_staking_fee"] = maxStakingFee.String()
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/prepare_staking/", params)
+}
+
+func (c MPCClient) BabylonReplaceStakingFee(requestId string, relatedRequestId string, feeRate big.Float, maxStakingFee *big.Int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id":         requestId,
+		"related_request_id": relatedRequestId,
+		"fee_rate":           feeRate.String(),
+	}
+	if maxStakingFee != nil {
+		params["max_staking_fee"] = maxStakingFee.String()
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/replace_staking_fee/", params)
+}
+
+func (c MPCClient) BabylonBroadcastStakingTransaction(requestId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/broadcast_staking_transaction/", params)
+}
+
+func (c MPCClient) BabylonGetStakingInfo(requestId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/babylon/get_staking_info/", params)
+}
+
+func (c MPCClient) BabylonListWaitingBroadcastTransactions(coin string, address string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"asset_coin": coin,
+		"address":    address,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/babylon/list_waiting_broadcast_transactions/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
