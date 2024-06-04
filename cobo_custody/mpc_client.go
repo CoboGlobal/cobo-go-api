@@ -75,10 +75,14 @@ func (c MPCClient) GetMainAddress(chainCode string) (*simplejson.Json, *ApiError
 	return c.Request("GET", "/v1/custody/mpc/get_main_address/", params)
 }
 
-func (c MPCClient) GenerateAddresses(chainCode string, count int) (*simplejson.Json, *ApiError) {
+func (c MPCClient) GenerateAddresses(chainCode string, count int, encoding *int) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"chain_code": chainCode,
 		"count":      strconv.Itoa(count),
+	}
+
+	if encoding != nil {
+		params["encoding"] = strconv.Itoa(*encoding)
 	}
 
 	return c.Request("POST", "/v1/custody/mpc/generate_addresses/", params)
@@ -594,6 +598,14 @@ func (c MPCClient) BabylonListWaitingBroadcastTransactions(coin string, address 
 	}
 
 	return c.Request("GET", "/v1/custody/mpc/babylon/list_waiting_broadcast_transactions/", params)
+}
+
+func (c MPCClient) GetApprovalDetails(requestId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/get_approval_details/", params)
 }
 
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
