@@ -583,6 +583,14 @@ func (c MPCClient) BabylonBroadcastStakingTransaction(requestId string) (*simple
 	return c.Request("POST", "/v1/custody/mpc/babylon/broadcast_staking_transaction/", params)
 }
 
+func (c MPCClient) BabylonBatchBroadcastStakingTransaction(requestIds []string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_ids": strings.Join(requestIds, ","),
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/batch_broadcast_staking_transaction/", params)
+}
+
 func (c MPCClient) BabylonGetStakingInfo(requestId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"request_id": requestId,
