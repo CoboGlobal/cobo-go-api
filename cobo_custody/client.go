@@ -314,7 +314,7 @@ func (c Client) request(method string, path string, params map[string]string) (s
 	}
 	success := c.VerifyEcc(string(body)+"|"+timestamp, signature)
 	if !success {
-		panic("response signature verify failed")
+		return "", errors.New("response signature verify failed")
 	}
 	return string(body), nil
 }
