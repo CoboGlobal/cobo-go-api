@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.60.0] (2024-06-28)
+[v0.60.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.59.0...v0.60.0
+### Changed
+- Fix panic when signature verify failed. https://github.com/CoboGlobal/cobo-go-api/pull/88
+
 ## [v0.59.0] (2024-06-18)
 [v0.59.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.58.0...v0.59.0
 ### Changed
