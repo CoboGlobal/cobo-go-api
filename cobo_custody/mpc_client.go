@@ -664,7 +664,7 @@ func (c MPCClient) request(method string, path string, params map[string]string)
 	}
 	success := c.VerifyEcc(string(body)+"|"+timestamp, signature)
 	if !success {
-		panic("response signature verify failed")
+		return "", errors.New("response signature verify failed")
 	}
 	return string(body), nil
 }
