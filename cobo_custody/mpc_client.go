@@ -608,6 +608,23 @@ func (c MPCClient) BabylonListWaitingBroadcastTransactions(coin string, address 
 	return c.Request("GET", "/v1/custody/mpc/babylon/list_waiting_broadcast_transactions/", params)
 }
 
+func (c MPCClient) BabylonListTransactionsByStatus(status int, address *string, minCoboId *string, limit *int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"status": strconv.Itoa(status),
+	}
+	if address != nil {
+		params["address"] = *address
+	}
+	if minCoboId != nil {
+		params["min_cobo_id"] = *minCoboId
+	}
+	if limit != nil {
+		params["limit"] = strconv.Itoa(*limit)
+	}
+
+	return c.Request("GET", "/v1/custody/mpc/babylon/list_transactions_by_status/", params)
+}
+
 func (c MPCClient) GetApprovalDetails(requestId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"request_id": requestId,
