@@ -575,6 +575,19 @@ func (c MPCClient) BabylonReplaceStakingFee(requestId string, relatedRequestId s
 	return c.Request("POST", "/v1/custody/mpc/babylon/replace_staking_fee/", params)
 }
 
+func (c MPCClient) BabylonDropStaking(requestId string, relatedRequestId string, feeRate big.Float, maxStakingFee *big.Int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id":         requestId,
+		"related_request_id": relatedRequestId,
+		"fee_rate":           feeRate.String(),
+	}
+	if maxStakingFee != nil {
+		params["max_staking_fee"] = maxStakingFee.String()
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/drop_staking/", params)
+}
+
 func (c MPCClient) BabylonBroadcastStakingTransaction(requestId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"request_id": requestId,
