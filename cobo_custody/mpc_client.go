@@ -588,6 +588,32 @@ func (c MPCClient) BabylonDropStaking(requestId string, relatedRequestId string,
 	return c.Request("POST", "/v1/custody/mpc/babylon/drop_staking/", params)
 }
 
+func (c MPCClient) BabylonUnbonding(requestId string, stakingRequestId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id":         requestId,
+		"staking_request_id": stakingRequestId,
+	}
+
+	return c.Request("POST", "/v1/custody/mpc/babylon/unbonding/", params)
+}
+
+func (c MPCClient) BabylonWithdraw(requestId string, feeRate big.Float, maxFeeAmount *big.Int, unbondingRequestId *string, stakingRequestId *string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"request_id": requestId,
+		"fee_rate":   feeRate.String(),
+	}
+	if maxFeeAmount != nil {
+		params["max_fee_amount"] = maxFeeAmount.String()
+	}
+	if unbondingRequestId != nil {
+		params["unbonding_request_id"] = *unbondingRequestId
+	}
+	if stakingRequestId != nil {
+		params["staking_request_id"] = *stakingRequestId
+	}
+	return c.Request("POST", "/v1/custody/mpc/babylon/withdraw/", params)
+}
+
 func (c MPCClient) BabylonBroadcastStakingTransaction(requestId string) (*simplejson.Json, *ApiError) {
 	var params = map[string]string{
 		"request_id": requestId,
