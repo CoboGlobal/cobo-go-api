@@ -441,7 +441,7 @@ func (c MPCClient) EstimateFee(coin string, amount *big.Int, address string, rep
 		params["extra_parameters"] = extra_parameters
 	}
 
-	return c.Request("GET", "/v1/custody/mpc/estimate_fee/", params)
+	return c.Request("POST", "/v1/custody/mpc/estimate_fee/", params)
 }
 
 func (c MPCClient) ListTssNodeRequests(requestType, status int) (*simplejson.Json, *ApiError) {
