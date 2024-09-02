@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.63.0] (2024-09-02)
+[v0.63.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.62.0...v0.63.0
+### Changed
+- Add New API `BabylonUnbonding` and `BabylonWithdraw` for MPC Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/95
+
 ## [v0.62.0] (2024-08-14)
 [v0.62.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.61.0...v0.62.0
 ### Changed
