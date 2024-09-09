@@ -201,6 +201,14 @@ func (c Client) Withdraw(coin string, requestId string, address string, amount *
 	return c.Request("POST", "/v1/custody/new_withdraw_request/", params)
 }
 
+func (c Client) AddCoin(coin string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"coin": coin,
+	}
+
+	return c.Request("POST", "/v1/custody/add_coin/", params)
+}
+
 func (c Client) QueryWithdrawInfo(requestId string) (*simplejson.Json, *ApiError) {
 	return c.Request("GET", "/v1/custody/withdraw_info_by_request_id/", map[string]string{"request_id": requestId})
 }
