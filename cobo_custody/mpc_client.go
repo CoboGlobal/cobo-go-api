@@ -672,6 +672,63 @@ func (c MPCClient) GetApprovalDetails(requestId string) (*simplejson.Json, *ApiE
 	return c.Request("GET", "/v1/custody/mpc/get_approval_details/", params)
 }
 
+func (c MPCClient) BabylonListEligibles(status string, minId string, limit *int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{}
+	
+	if status != "" {
+		params["status"] = status
+	}
+	
+	if minId != "" {
+		params["min_id"] = minId
+	}
+	
+	if limit != nil {
+		params["limit"] = strconv.Itoa(*limit)
+	}
+	
+	return c.Request("GET", "/v1/custody/mpc/babylon/airdrops/list_eligibles/", params)
+}
+
+func (c MPCClient) BabylonSubmitRegistration(btcAddress string, babylonAddress string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"btc_address": btcAddress,
+		"babylon_address": babylonAddress,
+	}
+	
+	return c.Request("POST", "/v1/custody/mpc/babylon/airdrops/submit_registration/", params)
+}
+
+func (c MPCClient) BabylonListRegistrations(status string, btcAddress string, minId string, limit *int) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{}
+	
+	if status != "" {
+		params["status"] = status
+	}
+	
+	if btcAddress != "" {
+		params["btc_address"] = btcAddress
+	}
+	
+	if minId != "" {
+		params["min_id"] = minId
+	}
+	
+	if limit != nil {
+		params["limit"] = strconv.Itoa(*limit)
+	}
+	
+	return c.Request("GET", "/v1/custody/mpc/babylon/airdrops/list_registrations/", params)
+}
+
+func (c MPCClient) BabylonGetRegistration(registrationId string) (*simplejson.Json, *ApiError) {
+	var params = map[string]string{
+		"registration_id": registrationId,
+	}
+	
+	return c.Request("GET", "/v1/custody/mpc/babylon/airdrops/get_registration/", params)
+}
+
 func (c MPCClient) request(method string, path string, params map[string]string) (string, error) {
 	httpClient := &http.Client{}
 	nonce := fmt.Sprintf("%d", time.Now().UnixNano()/1000)
