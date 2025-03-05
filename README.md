@@ -33,7 +33,7 @@ Go 1.18 or newer.
 add dependency
 
 ```sh
-go get github.com/CoboGlobal/cobo-go-api@v0.63.0
+go get github.com/CoboGlobal/cobo-go-api@v0.64.0
 ```
 
 ### Code Sample
