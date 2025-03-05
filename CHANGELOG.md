@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [v0.64.0] (2024-03-05)
 [v0.64.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.63.0...v0.64.0
 ### Added
-- Add New API `BabylonListEligibles`, `BabylonSubmitRegistration`, `BabylonListRegistrations`, `BabylonGetRegistration` for MPC Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/127
+- Add New API `BabylonListEligibles`, `BabylonSubmitRegistration`, `BabylonListRegistrations`, `BabylonGetRegistration` for MPC Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/102
 
 ## [v0.63.0] (2024-09-02)
 [v0.63.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.62.0...v0.63.0
