@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.65.0] (2025-04-08)
+
+### Added
+- Add New API `BabylonListEligibleStakings`, `BabylonSubmitStakingRegistration`, `BabylonListStakingRegistrations`, `BabylonGetStakingRegistration`, `BabylonClaimBabylonRewards` for MPC Wallet. https://github.com/CoboGlobal/cobo-go-api/pull/106
+
 ## [v0.64.0] (2025-03-05)
 [v0.64.0]: https://github.com/CoboGlobal/cobo-go-api/compare/v0.63.0...v0.64.0
 ### Added
